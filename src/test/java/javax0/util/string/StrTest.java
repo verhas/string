@@ -86,11 +86,11 @@ public class StrTest {
         Assertions.assertTrue(strings(" ", " ").is.any.blank());
         Assertions.assertFalse(strings(" ", " ").is.none.blank());
 
-        Assertions.assertTrue(strs(null).is.any.blank());
-        Assertions.assertFalse(strs(null).is.not.any.blank());
-        Assertions.assertFalse(strs(null).is.none.blank());
-        Assertions.assertTrue(strings(null).is.any.blank());
-        Assertions.assertFalse(strings(null).is.none.blank());
+        Assertions.assertTrue(strs((String[]) null).is.any.blank());
+        Assertions.assertFalse(strs((String[]) null).is.not.any.blank());
+        Assertions.assertFalse(strs((String[]) null).is.none.blank());
+        Assertions.assertTrue(strings((String[]) null).is.any.blank());
+        Assertions.assertFalse(strings((String[]) null).is.none.blank());
 
         Assertions.assertFalse(strs("X", "x").is.any.blank());
         Assertions.assertTrue(strs("X", "x").is.none.blank());
@@ -101,7 +101,7 @@ public class StrTest {
     @Test
     @DisplayName("Test substringAfter functionality")
     void testAfter() {
-        Assertions.assertEquals(null, str(null).after("*"));
+        Assertions.assertNull(str(null).after("*"));
         Assertions.assertEquals("", str("").after("*"));
         Assertions.assertEquals("", str("abrajadabra").after(null));
         Assertions.assertEquals("bc", str("abc").after("a"));
@@ -115,7 +115,7 @@ public class StrTest {
     @Test
     @DisplayName("Test substringAfterLast functionality")
     void testAfterLast() {
-        Assertions.assertEquals(null, str(null).after.last(""));
+        Assertions.assertNull(str(null).after.last(""));
         Assertions.assertEquals("", str("").after.last(""));
         Assertions.assertEquals("", str("").after.last(""));
         Assertions.assertEquals("", str("").after.last(null));
@@ -125,17 +125,17 @@ public class StrTest {
         Assertions.assertEquals("", str("a").after.last("a"));
         Assertions.assertEquals("", str("a").after.last("z"));
         Assertions.assertEquals("", str(null).notNull().after.last(""));
-        Assertions.assertEquals(null, str("").forceNull().after.last(""));
+        Assertions.assertNull(str("").forceNull().after.last(""));
         Assertions.assertEquals(" ", str("a ").after.last("a"));
         Assertions.assertEquals(" ", str("a ").forceNull().after.last("a"));
-        Assertions.assertEquals(null, str("a ").fforceNull().after.last("a"));
+        Assertions.assertNull(str("a ").fforceNull().after.last("a"));
     }
 
 
     @Test
     @DisplayName("Test substringBefore functionality")
     void testBefore() {
-        Assertions.assertEquals(null, str(null).before(""));
+        Assertions.assertNull(str(null).before(""));
         Assertions.assertEquals("", str("").before(""));
         Assertions.assertEquals("", str("abc").before("a"));
         Assertions.assertEquals("a", str("abcba").before("b"));
@@ -149,7 +149,7 @@ public class StrTest {
     @Test
     @DisplayName("Test substringBeforeLast functionality")
     void testBeforeLast() {
-        Assertions.assertEquals(null, str(null).before.last(""));
+        Assertions.assertNull(str(null).before.last(""));
         Assertions.assertEquals("", str("").before.last(""));
         Assertions.assertEquals("abc", str("abcba").before.last("b"));
         Assertions.assertEquals("ab", str("abc").before.last("c"));
