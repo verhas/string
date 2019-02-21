@@ -11,6 +11,20 @@ public class StrTest {
     @Test
     @DisplayName("Test different empty and non empty strings")
     void testIsEmpty() {
+
+        Assertions.assertEquals("",str("abrakadabra").before("ab"));
+        Assertions.assertEquals("abrakad",str("abrakadabra").before.last("ab"));
+        Assertions.assertEquals(null,str("abrakadabra").forceNull().before("ab"));
+        Assertions.assertEquals(null,str("    abrakadabra").fforceNull().before("ab"));
+
+        Assertions.assertFalse(string("abrakadabra").before("ab").is.not.empty());
+        Assertions.assertEquals(string("a"),string("abrakadabra").before("ka").after("br"));
+
+        final var starting = string("alma").before.last("a");
+        Assertions.assertEquals("lm",starting.ignoreCase().after("a").toString());
+        Assertions.assertEquals("Aalm",starting.prependIfMissing("A").toString());
+        Assertions.assertEquals("alm",starting.ignoreCase().prependIfMissing("A").toString());
+
         Assertions.assertTrue(str("").is.empty());
         Assertions.assertFalse(str("").is.not.empty());
         Assertions.assertTrue(str("").is.not.not.empty());

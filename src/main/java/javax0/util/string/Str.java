@@ -2,10 +2,9 @@ package javax0.util.string;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.function.Function;
-
-import static java.util.Objects.requireNonNull;
 
 public class Str {
     private final static int LEFT = 0x01;
@@ -21,6 +20,22 @@ public class Str {
     private final Function<String, String> nullCorrection;
     private final int side;
     private final boolean nullIsLess;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Str str = (Str) o;
+        return Objects.equals(string, str.string) &&
+            Arrays.equals(strings, str.strings);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(string);
+        result = 31 * result + Arrays.hashCode(strings);
+        return result;
+    }
 
     private Str(boolean nullIsLess, int side, Function<String, String> nullCorrection, boolean ignoreCase, String string) {
         this.side = side;
@@ -64,22 +79,22 @@ public class Str {
 
     public String substring(int start, int end) {
         notArray();
-        return requireNonNull(nullCorrection).apply(StringUtils.substring(string, start, end));
+        return nullCorrection.apply(StringUtils.substring(string, start, end));
     }
 
     public String substring(int start) {
         notArray();
-        return requireNonNull(nullCorrection).apply(StringUtils.substring(string, start));
+        return nullCorrection.apply(StringUtils.substring(string, start));
     }
 
     public String after(String separator) {
         notArray();
-        return requireNonNull(nullCorrection).apply(StringUtils.substringAfter(string, separator));
+        return nullCorrection.apply(StringUtils.substringAfter(string, separator));
     }
 
     public String before(String separator) {
         notArray();
-        return requireNonNull(nullCorrection).apply(StringUtils.substringBefore(string, separator));
+        return nullCorrection.apply(StringUtils.substringBefore(string, separator));
     }
 
     public String[] betweens(String open, String close) {
@@ -89,53 +104,53 @@ public class Str {
 
     public String between(String open, String close) {
         notArray();
-        return requireNonNull(nullCorrection).apply(StringUtils.substringBetween(string, open, close));
+        return nullCorrection.apply(StringUtils.substringBetween(string, open, close));
     }
 
     public String between(String tag) {
         notArray();
-        return requireNonNull(nullCorrection).apply(StringUtils.substringBetween(string, tag));
+        return nullCorrection.apply(StringUtils.substringBetween(string, tag));
     }
 
     public String trim() {
         notArray();
-        return requireNonNull(nullCorrection).apply(StringUtils.trim(string));
+        return nullCorrection.apply(StringUtils.trim(string));
     }
 
     public String swapCase() {
         notArray();
-        return requireNonNull(nullCorrection).apply(StringUtils.swapCase(string));
+        return nullCorrection.apply(StringUtils.swapCase(string));
     }
 
     public String lowerCase() {
         notArray();
-        return requireNonNull(nullCorrection).apply(StringUtils.lowerCase(string));
+        return nullCorrection.apply(StringUtils.lowerCase(string));
     }
 
     public String upperCase() {
         notArray();
-        return requireNonNull(nullCorrection).apply(StringUtils.upperCase(string));
+        return nullCorrection.apply(StringUtils.upperCase(string));
     }
 
     public String mid(int pos, int len) {
         notArray();
-        return requireNonNull(nullCorrection).apply(StringUtils.mid(string, pos, len));
+        return nullCorrection.apply(StringUtils.mid(string, pos, len));
     }
 
     public String normalizeSpace() {
         notArray();
-        return requireNonNull(nullCorrection).apply(StringUtils.normalizeSpace(string));
+        return nullCorrection.apply(StringUtils.normalizeSpace(string));
     }
 
     public String strip(final String stripChars) {
         notArray();
         switch (side) {
             case LEFT:
-                return requireNonNull(nullCorrection).apply(StringUtils.stripStart(string, stripChars));
+                return nullCorrection.apply(StringUtils.stripStart(string, stripChars));
             case RIGHT:
-                return requireNonNull(nullCorrection).apply(StringUtils.stripEnd(string, stripChars));
+                return nullCorrection.apply(StringUtils.stripEnd(string, stripChars));
             case BOTH:
-                return requireNonNull(nullCorrection).apply(StringUtils.strip(string, stripChars));
+                return nullCorrection.apply(StringUtils.strip(string, stripChars));
         }
         throw new IllegalArgumentException("SNAFU side value is " + side);
     }
@@ -146,61 +161,61 @@ public class Str {
 
     public String stripAccents() {
         notArray();
-        return requireNonNull(nullCorrection).apply(StringUtils.stripAccents(string));
+        return nullCorrection.apply(StringUtils.stripAccents(string));
     }
 
     public String chop() {
         notArray();
-        return requireNonNull(nullCorrection).apply(StringUtils.chop(string));
+        return nullCorrection.apply(StringUtils.chop(string));
     }
 
     public String chomp() {
         notArray();
-        return requireNonNull(nullCorrection).apply(StringUtils.chomp(string));
+        return nullCorrection.apply(StringUtils.chomp(string));
     }
 
     public String prependIfMissing(final CharSequence prefix, final CharSequence... prefixes) {
         notArray();
         if (ignoreCase) {
-            return requireNonNull(nullCorrection).apply(StringUtils.prependIfMissingIgnoreCase(string, prefix, prefixes));
+            return nullCorrection.apply(StringUtils.prependIfMissingIgnoreCase(string, prefix, prefixes));
         } else {
-            return requireNonNull(nullCorrection).apply(StringUtils.prependIfMissing(string, prefix, prefixes));
+            return nullCorrection.apply(StringUtils.prependIfMissing(string, prefix, prefixes));
         }
     }
 
     public String wrap(final char wrapWith) {
         notArray();
-        return requireNonNull(nullCorrection).apply(StringUtils.wrap(string, wrapWith));
+        return nullCorrection.apply(StringUtils.wrap(string, wrapWith));
     }
 
     public String wrap(final String wrapWith) {
         notArray();
-        return requireNonNull(nullCorrection).apply(StringUtils.wrap(string, wrapWith));
+        return nullCorrection.apply(StringUtils.wrap(string, wrapWith));
     }
 
     public String wrapIfMissing(final char wrapWith) {
         notArray();
-        return requireNonNull(nullCorrection).apply(StringUtils.wrapIfMissing(string, wrapWith));
+        return nullCorrection.apply(StringUtils.wrapIfMissing(string, wrapWith));
     }
 
     public String wrapIfMissing(final String wrapWith) {
         notArray();
-        return requireNonNull(nullCorrection).apply(StringUtils.wrapIfMissing(string, wrapWith));
+        return nullCorrection.apply(StringUtils.wrapIfMissing(string, wrapWith));
     }
 
     public String uncapitalize() {
         notArray();
-        return requireNonNull(nullCorrection).apply(StringUtils.uncapitalize(string));
+        return nullCorrection.apply(StringUtils.uncapitalize(string));
     }
 
     public String truncate(int maxWidth) {
         notArray();
-        return requireNonNull(nullCorrection).apply(StringUtils.truncate(string, maxWidth));
+        return nullCorrection.apply(StringUtils.truncate(string, maxWidth));
     }
 
     public String truncate(int offset, int maxWidth) {
         notArray();
-        return requireNonNull(nullCorrection).apply(StringUtils.truncate(string, offset, maxWidth));
+        return nullCorrection.apply(StringUtils.truncate(string, offset, maxWidth));
     }
 
     public int compare(String other) {
@@ -264,6 +279,21 @@ public class Str {
         public final AfterLast after = new AfterLast();
         public final BeforeLast before = new BeforeLast();
 
+        private Str getStr(){ return Str.this;}
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Chain otherChain = (Chain) o;
+            return Str.this.equals(otherChain.getStr());
+        }
+
+        @Override
+        public int hashCode() {
+            return Str.this.hashCode();
+        }
+
         private Chain() {
             this.is = Str.this.is;
         }
@@ -274,6 +304,10 @@ public class Str {
 
         public Chain after(String separator) {
             return copy(Str.this.after(separator)).new Chain();
+        }
+
+        public Chain before(String separator) {
+            return copy(Str.this.before(separator)).new Chain();
         }
 
         public Chain substring(int start) {
@@ -376,6 +410,10 @@ public class Str {
             return Str.this.notNull().new Chain();
         }
 
+        public Chain ignoreCase() {
+            return Str.this.ignoreCase().new Chain();
+        }
+
         public Chain nullIsMore() {
             return Str.this.nullIsMore().new Chain();
         }
@@ -462,14 +500,14 @@ public class Str {
     public class AfterLast {
         public String last(String separator) {
             notArray();
-            return requireNonNull(nullCorrection).apply(StringUtils.substringAfterLast(string, separator));
+            return nullCorrection.apply(StringUtils.substringAfterLast(string, separator));
         }
     }
 
     public class BeforeLast {
         public String last(String separator) {
             notArray();
-            return requireNonNull(nullCorrection).apply(StringUtils.substringBeforeLast(string, separator));
+            return nullCorrection.apply(StringUtils.substringBeforeLast(string, separator));
         }
     }
 
