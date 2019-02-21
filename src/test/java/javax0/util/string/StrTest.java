@@ -136,7 +136,7 @@ public class StrTest {
         Assertions.assertEquals("bc", str("abc").after.last("a"));
         Assertions.assertEquals("a", str("abcba").after.last("b"));
         Assertions.assertEquals("", str("abc").after.last("c"));
-        Assertions.assertEquals("", str("a").after.last("a"));
+        Assertions.assertEquals("", str("a").after.the.last("a"));
         Assertions.assertEquals("", str("a").after.last("z"));
         Assertions.assertEquals("", str(null).notNull().after.last(""));
         Assertions.assertNull(str("").forceNull().after.last(""));
@@ -171,5 +171,48 @@ public class StrTest {
         Assertions.assertEquals("a", str("a").before.last("z"));
         Assertions.assertEquals("a", str("a").before.last(null));
         Assertions.assertEquals("a", str("a").before.last(""));
+    }
+
+
+    @Test
+    @DisplayName("Test length comparison")
+    void testLengthComparition() {
+        Assertions.assertTrue(str(null).is.shorter.than(1));
+        Assertions.assertTrue(str("").is.shorter.than(1));
+        Assertions.assertFalse(str("A").is.shorter.than(1));
+        Assertions.assertTrue(str("A").is.shorter.than("AA"));
+        Assertions.assertEquals("AA",string("AA").before.last("A").toStringBuilder().append("A").toString());
+        Assertions.assertTrue(str("A").is.shorter.than(string("AA").before.last("A").toStringBuilder().append("A")));
+        Assertions.assertTrue(str("AA").is.longer.than("A"));
+        Assertions.assertFalse(str("A").is.longer.than(1));
+        Assertions.assertTrue(str("A").is.longer.than(0));
+        Assertions.assertTrue(str("A").is.not.longer.than(1));
+    }
+
+
+    @Test
+    @DisplayName("Test padding")
+    void testPadding() {
+        Assertions.assertEquals("   ",str(null).notNull().pad(3));
+        Assertions.assertEquals("   ",str("").pad(3));
+        Assertions.assertEquals(" A ",str("A").pad(3));
+        Assertions.assertEquals("  A",str("A").left().pad(3));
+        Assertions.assertEquals("A  ",str("A").right().pad(3));
+        Assertions.assertEquals(" A  ",str("A").both().pad(4));
+        Assertions.assertEquals(". A .",""+string("A").left().pad(2).right().pad(3).both().pad(5,'.'));
+    }
+
+    @Test
+    @DisplayName("Test contains")
+    void testContains() {
+        Assertions.assertTrue(str("abrakadabra").contains("kadab"));
+        Assertions.assertTrue(str("abrakadabra").does.contain("kadab"));
+        Assertions.assertFalse(str("abrakadabra").does.not.contain("kadab"));
+        Assertions.assertTrue(str("abrakadabra").does.not.contain("susisa"));
+
+        Assertions.assertTrue(string("abrakadabra").contains("kadab"));
+        Assertions.assertTrue(string("abrakadabra").does.contain("kadab"));
+        Assertions.assertFalse(string("abrakadabra").does.not.contain("kadab"));
+        Assertions.assertTrue(string("abrakadabra").does.not.contain("susisa"));
     }
 }

@@ -10,7 +10,9 @@ public class Str {
     private final static int LEFT = 0x01;
     private final static int RIGHT = 0x02;
     private final static int BOTH = LEFT | RIGHT;
-    final public Condition is = new Condition();
+    public final Str the = this;
+    public final Condition is = new Condition();
+    public final Condition does = is;
     public final AfterLast after = new AfterLast();
     public final BeforeLast before = new BeforeLast();
     final private String string;
@@ -21,25 +23,13 @@ public class Str {
     private final int side;
     private final boolean nullIsLess;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Str str = (Str) o;
-        return Objects.equals(string, str.string) &&
-            Arrays.equals(strings, str.strings);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = Objects.hash(string);
-        result = 31 * result + Arrays.hashCode(strings);
-        return result;
-    }
-
-    private Str(boolean nullIsLess, int side, Function<String, String> nullCorrection, boolean ignoreCase, String string) {
+    private Str(boolean nullIsLess, int side, Function<String, String> nullCorrection, boolean ignoreCase, CharSequence string) {
         this.side = side;
-        this.string = string;
+        if (string == null) {
+            this.string = null;
+        } else {
+            this.string = string.toString();
+        }
         this.nullIsLess = nullIsLess;
         this.strings = null;
         this.isArrayOp = false;
@@ -61,7 +51,7 @@ public class Str {
         return new Str(strings);
     }
 
-    public static Str str(String string) {
+    public static Str str(CharSequence string) {
         return new Str(true, BOTH, s -> s, false, string);
     }
 
@@ -73,8 +63,28 @@ public class Str {
         return new Str(strings).new Chain();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Str str = (Str) o;
+        return Objects.equals(string, str.string) &&
+                Arrays.equals(strings, str.strings);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(string);
+        result = 31 * result + Arrays.hashCode(strings);
+        return result;
+    }
+
     private Str copy(String string) {
         return new Str(nullIsLess, side, nullCorrection, ignoreCase, string);
+    }
+
+    public boolean contains(String other) {
+        return is.contain(other);
     }
 
     public String substring(int start, int end) {
@@ -112,6 +122,7 @@ public class Str {
         return nullCorrection.apply(StringUtils.substringBetween(string, tag));
     }
 
+    @Deprecated()
     public String trim() {
         notArray();
         return nullCorrection.apply(StringUtils.trim(string));
@@ -151,6 +162,23 @@ public class Str {
                 return nullCorrection.apply(StringUtils.stripEnd(string, stripChars));
             case BOTH:
                 return nullCorrection.apply(StringUtils.strip(string, stripChars));
+        }
+        throw new IllegalArgumentException("SNAFU side value is " + side);
+    }
+
+    public String pad(final int n) {
+        return pad(n, ' ');
+    }
+
+    public String pad(final int n, char paddingChar) {
+        notArray();
+        switch (side) {
+            case LEFT:
+                return nullCorrection.apply(StringUtils.leftPad(string, n, paddingChar));
+            case RIGHT:
+                return nullCorrection.apply(StringUtils.rightPad(string, n, paddingChar));
+            case BOTH:
+                return nullCorrection.apply(StringUtils.center(string, n, paddingChar));
         }
         throw new IllegalArgumentException("SNAFU side value is " + side);
     }
@@ -255,15 +283,15 @@ public class Str {
     }
 
     public Str notNull() {
-        return new Str(nullIsLess, side, s -> s == null ? "" : s, ignoreCase, string);
+        return new Str(nullIsLess, side, s -> s == null ? "" : s, ignoreCase, string == null ? "" : string);
     }
 
     public Str forceNull() {
-        return new Str(nullIsLess, side, s -> StringUtils.isEmpty(s) ? null : s, ignoreCase, string);
+        return new Str(nullIsLess, side, s -> str(s).is.empty() ? null : s, ignoreCase, is.empty() ? null : string);
     }
 
     public Str fforceNull() {
-        return new Str(nullIsLess, side, s -> str(s).is.blank() ? null : s, ignoreCase, string);
+        return new Str(nullIsLess, side, s -> str(s).is.blank() ? null : s, ignoreCase, is.blank() ? null : string);
     }
 
     public Str left() {
@@ -274,12 +302,20 @@ public class Str {
         return new Str(nullIsLess, RIGHT, s -> str(s).is.blank() ? null : s, ignoreCase, string);
     }
 
+    public Str both() {
+        return new Str(nullIsLess, BOTH, s -> str(s).is.blank() ? null : s, ignoreCase, string);
+    }
+
     public class Chain {
-        public final Condition is;
+        public final Chain the = this;
+        public final Condition is = Str.this.is;
+        public final Condition does = is;
         public final AfterLast after = new AfterLast();
         public final BeforeLast before = new BeforeLast();
 
-        private Str getStr(){ return Str.this;}
+        private Str getStr() {
+            return Str.this;
+        }
 
         @Override
         public boolean equals(Object o) {
@@ -294,8 +330,8 @@ public class Str {
             return Str.this.hashCode();
         }
 
-        private Chain() {
-            this.is = Str.this.is;
+        public int length() {
+            return Str.this.length();
         }
 
         public int compare(String other) {
@@ -318,6 +354,7 @@ public class Str {
             return copy(Str.this.substring(start, end)).new Chain();
         }
 
+        @Deprecated()
         public Chain trim(int start, int end) {
             return copy(Str.this.trim()).new Chain();
         }
@@ -390,6 +427,14 @@ public class Str {
             return copy(Str.this.strip(stripChars)).new Chain();
         }
 
+        public Chain pad(final int n) {
+            return copy(Str.this.pad(n)).new Chain();
+        }
+
+        public Chain pad(final int n, char paddingChar) {
+            return copy(Str.this.pad(n, paddingChar)).new Chain();
+        }
+
         public Chain strip() {
             return copy(Str.this.strip()).new Chain();
         }
@@ -418,6 +463,10 @@ public class Str {
             return Str.this.nullIsMore().new Chain();
         }
 
+        public boolean contains(String other) {
+            return Str.this.contains(other);
+        }
+
         public Chain left() {
             return Str.this.left().new Chain();
         }
@@ -426,12 +475,20 @@ public class Str {
             return Str.this.right().new Chain();
         }
 
+        public Chain both() {
+            return Str.this.both().new Chain();
+        }
+
         public Chain forceNull() {
             return Str.this.forceNull().new Chain();
         }
 
         public Chain fforceNull() {
             return Str.this.fforceNull().new Chain();
+        }
+
+        public StringBuilder toStringBuilder() {
+            return new StringBuilder(string);
         }
 
         public String toString() {
@@ -443,12 +500,16 @@ public class Str {
         }
 
         public class AfterLast {
+            public final AfterLast the = this;
+
             public Chain last(String separator) {
                 return copy(Str.this.after.last(separator)).new Chain();
             }
         }
 
         public class BeforeLast {
+            public final BeforeLast the = this;
+
             public Chain last(String separator) {
                 return copy(Str.this.before.last(separator)).new Chain();
             }
@@ -456,6 +517,7 @@ public class Str {
     }
 
     public class AnyOrNone {
+        public final AnyOrNone the = this;
         final private Function<Boolean, Boolean> correction;
 
         private AnyOrNone(Function<Boolean, Boolean> correction) {
@@ -469,9 +531,12 @@ public class Str {
     }
 
     public class Condition {
+        public final Condition the = this;
         final public AnyOrNone any;
         final public AnyOrNone none;
         final public Condition not;
+        public final ShorterThan shorter = new ShorterThan();
+        public final LongerThan longer = new LongerThan();
         final private Function<Boolean, Boolean> boolCorrection;
 
         private Condition(Condition it) {
@@ -488,6 +553,10 @@ public class Str {
             none = new AnyOrNone(b -> !b);
         }
 
+        public boolean contain(String other) {
+            return boolCorrection.apply(StringUtils.contains(string, other));
+        }
+
         public boolean empty() {
             return boolCorrection.apply(StringUtils.isEmpty(string));
         }
@@ -495,9 +564,47 @@ public class Str {
         public boolean blank() {
             return boolCorrection.apply(StringUtils.isBlank(string));
         }
+
+        public class LongerThan {
+            public boolean than(int n) {
+                return boolCorrection.apply(length() > n);
+            }
+
+            public boolean than(CharSequence other) {
+                return boolCorrection.apply(length() > str(other).length());
+            }
+
+            public boolean than(Str other) {
+                return boolCorrection.apply(length() > other.length());
+            }
+
+            public boolean than(Chain other) {
+                return boolCorrection.apply(length() > other.length());
+            }
+        }
+
+        public class ShorterThan {
+            public boolean than(int n) {
+                return boolCorrection.apply(length() < n);
+            }
+
+            public boolean than(CharSequence other) {
+                return boolCorrection.apply(length() < str(other).length());
+            }
+
+            public boolean than(Str other) {
+                return boolCorrection.apply(length() < other.length());
+            }
+
+            public boolean than(Chain other) {
+                return boolCorrection.apply(length() < other.length());
+            }
+        }
     }
 
     public class AfterLast {
+        public final AfterLast the = this;
+
         public String last(String separator) {
             notArray();
             return nullCorrection.apply(StringUtils.substringAfterLast(string, separator));
@@ -505,6 +612,8 @@ public class Str {
     }
 
     public class BeforeLast {
+        public final BeforeLast the = this;
+
         public String last(String separator) {
             notArray();
             return nullCorrection.apply(StringUtils.substringBeforeLast(string, separator));
