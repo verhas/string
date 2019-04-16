@@ -127,6 +127,14 @@ public class Str {
         notArray();
         return nullCorrection.apply(StringUtils.trim(string));
     }
+    /*!jamal
+    {{@for nameOfTheMethod in (swapCase,lowerCase,upperCase,stripAccents,chop,chomp,uncapitalize)=
+    public String nameOfTheMethod() {
+        notArray();
+        return nullCorrection.apply(StringUtils.nameOfTheMethod(string));
+    }
+    }}
+     */
 
     public String swapCase() {
         notArray();
@@ -142,6 +150,28 @@ public class Str {
         notArray();
         return nullCorrection.apply(StringUtils.upperCase(string));
     }
+
+    public String stripAccents() {
+        notArray();
+        return nullCorrection.apply(StringUtils.stripAccents(string));
+    }
+
+    public String chop() {
+        notArray();
+        return nullCorrection.apply(StringUtils.chop(string));
+    }
+
+    public String chomp() {
+        notArray();
+        return nullCorrection.apply(StringUtils.chomp(string));
+    }
+
+    public String uncapitalize() {
+        notArray();
+        return nullCorrection.apply(StringUtils.uncapitalize(string));
+    }
+
+    //__END__
 
     public String mid(int pos, int len) {
         notArray();
@@ -187,20 +217,6 @@ public class Str {
         return strip(null);
     }
 
-    public String stripAccents() {
-        notArray();
-        return nullCorrection.apply(StringUtils.stripAccents(string));
-    }
-
-    public String chop() {
-        notArray();
-        return nullCorrection.apply(StringUtils.chop(string));
-    }
-
-    public String chomp() {
-        notArray();
-        return nullCorrection.apply(StringUtils.chomp(string));
-    }
 
     public String prependIfMissing(final CharSequence prefix, final CharSequence... prefixes) {
         notArray();
@@ -231,10 +247,7 @@ public class Str {
         return nullCorrection.apply(StringUtils.wrapIfMissing(string, wrapWith));
     }
 
-    public String uncapitalize() {
-        notArray();
-        return nullCorrection.apply(StringUtils.uncapitalize(string));
-    }
+
 
     public String truncate(int maxWidth) {
         notArray();
