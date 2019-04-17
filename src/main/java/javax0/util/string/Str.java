@@ -92,20 +92,44 @@ public class Str {
         return nullCorrection.apply(StringUtils.substring(string, start, end));
     }
 
-    public String substring(int start) {
+    /*!jamal
+    {{@define oneArgMethods=after|substringAfter|String,before|substringBefore|String,substring|substring|int,
+                                          between|substringBetween|String,wrap|char,wrap|String,
+                                          wrapIfMissing|char,wrapIfMissing|String,
+                                          truncate|truncate|int}}
+
+    */
+    // __END__
+
+    /*!jamal
+    //<editor-fold id="chains">{{@use global javax0.jamal.extensions.IndexStringTable}}{{@define $forsep=\s*,\s*}}
+    {{#eval{{#for X in ({{oneArgMethods}})={{@ident
+    public String {{#get 0 |X}}({{#get 2 |X}} arg) {
         notArray();
-        return nullCorrection.apply(StringUtils.substring(string, start));
+        return nullCorrection.apply(StringUtils.{{#get 1 |X}}(string, arg));
+    }
+    }}}}}}
+    //</editor-fold>
+    */
+    //<editor-fold id="chains">
+    public String substring(int arg) {
+        notArray();
+        return nullCorrection.apply(StringUtils.substring(string, arg));
     }
 
-    public String after(String separator) {
+    public String after(String arg) {
         notArray();
-        return nullCorrection.apply(StringUtils.substringAfter(string, separator));
+        return nullCorrection.apply(StringUtils.substringAfter(string, arg));
     }
 
-    public String before(String separator) {
+    public String before(String arg) {
         notArray();
-        return nullCorrection.apply(StringUtils.substringBefore(string, separator));
+        return nullCorrection.apply(StringUtils.substringBefore(string, arg));
     }
+
+    //</editor-fold>
+    //__END__
+
 
     public String[] betweens(String open, String close) {
         notArray();
@@ -129,10 +153,10 @@ public class Str {
     }
     /*!jamal
     //<editor-fold id="">
-    {{@for nameOfTheMethod in (swapCase,lowerCase,upperCase,stripAccents,chop,chomp,uncapitalize)=
-    public String nameOfTheMethod() {
+    {{@for X in (swapCase,lowerCase,upperCase,stripAccents,chop,chomp,uncapitalize)=
+    public String X() {
         notArray();
-        return nullCorrection.apply(StringUtils.nameOfTheMethod(string));
+        return nullCorrection.apply(StringUtils.X(string));
     }
     }}
     //</editor-fold>
@@ -356,17 +380,18 @@ public class Str {
 
         /*!jamal
         //<editor-fold id="chains">{{@use global javax0.jamal.extensions.IndexStringTable}}{{@define $forsep=\s*,\s*}}
-        {{#eval{{@for nameOfTheMethod in (after|String,before|String,substring|int,
+        {{#eval{{@for X in (after|String,before|String,substring|int,
                                           between|String,wrap|char,wrap|String,
-                                          wrapIfMissing|char,wrapIfMissing|String,
+                                          wrapIfMissing|wrapIfMissing|char,
+                                          wrapIfMissing|wrapIfMissing|String,
                                           truncate|int,strip|String,pad|int)=
-        public Chain {{#get 0 |nameOfTheMethod}}(final {{#get 1 |nameOfTheMethod}} arg) {
-            return copy(Str.this.{{#get 0 |nameOfTheMethod}}(arg)).new Chain();
-        } }}}}
+        public Chain {{#get 0 |X}}(final {{#get 1 |X}} arg) {
+            return copy(Str.this.{{#get 0 |X}}(arg)).new Chain();
+        }
+        }}}}
         //</editor-fold>
         */
         //<editor-fold id="chains">
-
         public Chain after(final String arg) {
             return copy(Str.this.after(arg)).new Chain();
         }
@@ -409,18 +434,19 @@ public class Str {
 
         public Chain pad(final int arg) {
             return copy(Str.this.pad(arg)).new Chain();
-        } 
+        }
+
         //</editor-fold>
         //__END__
 
         /*!jamal
         //<editor-fold id="chains">{{@use global javax0.jamal.extensions.IndexStringTable}}{{@define $forsep=\s*,\s*}}
-        {{#eval{{@for nameOfTheMethod in (truncate|int|int,substring|int|int,
+        {{#eval{{@for X in (truncate|int|int,substring|int|int,
                                           between|String|String,mid|int|int,
                                           prependIfMissing|CharSequence|CharSequence...,
                                           pad|int|char)=
-        public Chain {{#get 0 |nameOfTheMethod}}(final {{#get 1 |nameOfTheMethod}} arg1,final {{#get 2 |nameOfTheMethod}} arg2) {
-            return copy(Str.this.{{#get 0 |nameOfTheMethod}}(arg1,arg2)).new Chain();
+        public Chain {{#get 0 |X}}(final {{#get 1 |X}} arg1,final {{#get 2 |X}} arg2) {
+            return copy(Str.this.{{#get 0 |X}}(arg1,arg2)).new Chain();
         } }}}}
         //</editor-fold>
         */
@@ -457,10 +483,10 @@ public class Str {
 
         /*!jamal
         //<editor-fold id="chains">{{@define $forsep=\s*,\s*}}
-        {{@for nameOfTheMethod in (swapCase,lowerCase,upperCase,normalizeSpace,
+        {{@for X in (swapCase,lowerCase,upperCase,normalizeSpace,
                                    uncapitalize,strip,stripAccents,chop,chomp)=
-        public Chain nameOfTheMethod() {
-            return copy(Str.this.nameOfTheMethod()).new Chain();
+        public Chain X() {
+            return copy(Str.this.X()).new Chain();
         } }}
         //</editor-fold>
         */
@@ -498,10 +524,10 @@ public class Str {
 
         /*!jamal
         //<editor-fold id="chains">{{@define $forsep=\s*,\s*}}
-        {{@for nameOfTheMethod in (notNull,ignoreCase,nullIsMore,left,
+        {{@for X in (notNull,ignoreCase,nullIsMore,left,
         right,both,forceNull,fforceNull)=
-        public Chain nameOfTheMethod() {
-            return Str.this.nameOfTheMethod().new Chain();
+        public Chain X() {
+            return Str.this.X().new Chain();
         } }}
         //</editor-fold>
         */
