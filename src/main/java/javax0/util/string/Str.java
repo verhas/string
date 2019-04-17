@@ -128,13 +128,16 @@ public class Str {
         return nullCorrection.apply(StringUtils.trim(string));
     }
     /*!jamal
+    //<editor-fold id="">
     {{@for nameOfTheMethod in (swapCase,lowerCase,upperCase,stripAccents,chop,chomp,uncapitalize)=
     public String nameOfTheMethod() {
         notArray();
         return nullCorrection.apply(StringUtils.nameOfTheMethod(string));
     }
     }}
-     */
+    //</editor-fold>
+    */
+    //<editor-fold id="">
 
     public String swapCase() {
         notArray();
@@ -171,8 +174,8 @@ public class Str {
         return nullCorrection.apply(StringUtils.uncapitalize(string));
     }
 
+    //</editor-fold>
     //__END__
-
     public String mid(int pos, int len) {
         notArray();
         return nullCorrection.apply(StringUtils.mid(string, pos, len));
@@ -351,153 +354,188 @@ public class Str {
             return Str.this.compare(other);
         }
 
-        public Chain after(String separator) {
-            return copy(Str.this.after(separator)).new Chain();
+        /*!jamal
+        //<editor-fold id="chains">{{@use global javax0.jamal.extensions.IndexStringTable}}{{@define $forsep=\s*,\s*}}
+        {{#eval{{@for nameOfTheMethod in (after|String,before|String,substring|int,
+                                          between|String,wrap|char,wrap|String,
+                                          wrapIfMissing|char,wrapIfMissing|String,
+                                          truncate|int,strip|String,pad|int)=
+        public Chain {{#get 0 |nameOfTheMethod}}(final {{#get 1 |nameOfTheMethod}} arg) {
+            return copy(Str.this.{{#get 0 |nameOfTheMethod}}(arg)).new Chain();
+        } }}}}
+        //</editor-fold>
+        */
+        //<editor-fold id="chains">
+
+        public Chain after(final String arg) {
+            return copy(Str.this.after(arg)).new Chain();
         }
 
-        public Chain before(String separator) {
-            return copy(Str.this.before(separator)).new Chain();
+        public Chain before(final String arg) {
+            return copy(Str.this.before(arg)).new Chain();
         }
 
-        public Chain substring(int start) {
-            return copy(Str.this.substring(start)).new Chain();
+        public Chain substring(final int arg) {
+            return copy(Str.this.substring(arg)).new Chain();
         }
 
-        public Chain substring(int start, int end) {
-            return copy(Str.this.substring(start, end)).new Chain();
+        public Chain between(final String arg) {
+            return copy(Str.this.between(arg)).new Chain();
         }
+
+        public Chain wrap(final char arg) {
+            return copy(Str.this.wrap(arg)).new Chain();
+        }
+
+        public Chain wrap(final String arg) {
+            return copy(Str.this.wrap(arg)).new Chain();
+        }
+
+        public Chain wrapIfMissing(final char arg) {
+            return copy(Str.this.wrapIfMissing(arg)).new Chain();
+        }
+
+        public Chain wrapIfMissing(final String arg) {
+            return copy(Str.this.wrapIfMissing(arg)).new Chain();
+        }
+
+        public Chain truncate(final int arg) {
+            return copy(Str.this.truncate(arg)).new Chain();
+        }
+
+        public Chain strip(final String arg) {
+            return copy(Str.this.strip(arg)).new Chain();
+        }
+
+        public Chain pad(final int arg) {
+            return copy(Str.this.pad(arg)).new Chain();
+        } 
+        //</editor-fold>
+        //__END__
+
+        /*!jamal
+        //<editor-fold id="chains">{{@use global javax0.jamal.extensions.IndexStringTable}}{{@define $forsep=\s*,\s*}}
+        {{#eval{{@for nameOfTheMethod in (truncate|int|int,substring|int|int,
+                                          between|String|String,mid|int|int,
+                                          prependIfMissing|CharSequence|CharSequence...,
+                                          pad|int|char)=
+        public Chain {{#get 0 |nameOfTheMethod}}(final {{#get 1 |nameOfTheMethod}} arg1,final {{#get 2 |nameOfTheMethod}} arg2) {
+            return copy(Str.this.{{#get 0 |nameOfTheMethod}}(arg1,arg2)).new Chain();
+        } }}}}
+        //</editor-fold>
+        */
+        //<editor-fold id="chains">
+        public Chain truncate(final int arg1,final int arg2) {
+            return copy(Str.this.truncate(arg1,arg2)).new Chain();
+        } 
+        public Chain substring(final int arg1,final int arg2) {
+            return copy(Str.this.substring(arg1,arg2)).new Chain();
+        } 
+        public Chain between(final String arg1,final String arg2) {
+            return copy(Str.this.between(arg1,arg2)).new Chain();
+        } 
+        public Chain mid(final int arg1,final int arg2) {
+            return copy(Str.this.mid(arg1,arg2)).new Chain();
+        } 
+        public Chain prependIfMissing(final CharSequence arg1,final CharSequence... arg2) {
+            return copy(Str.this.prependIfMissing(arg1,arg2)).new Chain();
+        } 
+        public Chain pad(final int arg1,final char arg2) {
+            return copy(Str.this.pad(arg1,arg2)).new Chain();
+        } 
+        //</editor-fold>
+        //__END__
 
         @Deprecated()
-        public Chain trim(int start, int end) {
+        public Chain trim(final int start, final int end) {
             return copy(Str.this.trim()).new Chain();
         }
 
-        public Chain between(String open, String close) {
-            return copy(Str.this.between(open, close)).new Chain();
-        }
-
-        public Chain betweens(String open, String close) {
+        public Chain betweens(final String open, final String close) {
             return new Str(Str.this.betweens(open, close)).new Chain();
         }
 
-        public Chain between(String tag) {
-            return copy(Str.this.between(tag)).new Chain();
-        }
+        /*!jamal
+        //<editor-fold id="chains">{{@define $forsep=\s*,\s*}}
+        {{@for nameOfTheMethod in (swapCase,lowerCase,upperCase,normalizeSpace,
+                                   uncapitalize,strip,stripAccents,chop,chomp)=
+        public Chain nameOfTheMethod() {
+            return copy(Str.this.nameOfTheMethod()).new Chain();
+        } }}
+        //</editor-fold>
+        */
+        //<editor-fold id="chains">
 
         public Chain swapCase() {
             return copy(Str.this.swapCase()).new Chain();
-        }
-
+        } 
         public Chain lowerCase() {
             return copy(Str.this.lowerCase()).new Chain();
-        }
-
+        } 
         public Chain upperCase() {
             return copy(Str.this.upperCase()).new Chain();
-        }
-
-        public Chain mid(int pos, int len) {
-            return copy(Str.this.mid(pos, len)).new Chain();
-        }
-
+        } 
         public Chain normalizeSpace() {
             return copy(Str.this.normalizeSpace()).new Chain();
-        }
-
-        public Chain prependIfMissing(final CharSequence prefix, final CharSequence... prefixes) {
-            return copy(Str.this.prependIfMissing(prefix, prefixes)).new Chain();
-        }
-
-        public Chain wrap(final char wrapWith) {
-            return copy(Str.this.wrap(wrapWith)).new Chain();
-        }
-
-        public Chain wrap(final String wrapWith) {
-            return copy(Str.this.wrap(wrapWith)).new Chain();
-        }
-
+        } 
         public Chain uncapitalize() {
             return copy(Str.this.uncapitalize()).new Chain();
-        }
-
-        public Chain wrapIfMissing(final char wrapWith) {
-            return copy(Str.this.wrapIfMissing(wrapWith)).new Chain();
-        }
-
-        public Chain wrapIfMissing(final String wrapWith) {
-            return copy(Str.this.wrapIfMissing(wrapWith)).new Chain();
-        }
-
-        public Chain truncate(final int maxWidth) {
-            return copy(Str.this.truncate(maxWidth)).new Chain();
-        }
-
-        public Chain truncate(final int offset, final int maxWidth) {
-            return copy(Str.this.truncate(offset, maxWidth)).new Chain();
-        }
-
-        public Chain strip(final String stripChars) {
-            return copy(Str.this.strip(stripChars)).new Chain();
-        }
-
-        public Chain pad(final int n) {
-            return copy(Str.this.pad(n)).new Chain();
-        }
-
-        public Chain pad(final int n, char paddingChar) {
-            return copy(Str.this.pad(n, paddingChar)).new Chain();
-        }
-
+        } 
         public Chain strip() {
             return copy(Str.this.strip()).new Chain();
-        }
-
+        } 
         public Chain stripAccents() {
             return copy(Str.this.stripAccents()).new Chain();
-        }
-
+        } 
         public Chain chop() {
             return copy(Str.this.chop()).new Chain();
-        }
-
+        } 
         public Chain chomp() {
             return copy(Str.this.chomp()).new Chain();
-        }
+        } 
+        //</editor-fold>
+        //__END__
+
+        /*!jamal
+        //<editor-fold id="chains">{{@define $forsep=\s*,\s*}}
+        {{@for nameOfTheMethod in (notNull,ignoreCase,nullIsMore,left,
+        right,both,forceNull,fforceNull)=
+        public Chain nameOfTheMethod() {
+            return Str.this.nameOfTheMethod().new Chain();
+        } }}
+        //</editor-fold>
+        */
+        //<editor-fold id="chains">
 
         public Chain notNull() {
             return Str.this.notNull().new Chain();
-        }
-
+        } 
         public Chain ignoreCase() {
             return Str.this.ignoreCase().new Chain();
-        }
-
+        } 
         public Chain nullIsMore() {
             return Str.this.nullIsMore().new Chain();
-        }
+        } 
+        public Chain left() {
+            return Str.this.left().new Chain();
+        } 
+        public Chain right() {
+            return Str.this.right().new Chain();
+        } 
+        public Chain both() {
+            return Str.this.both().new Chain();
+        } 
+        public Chain forceNull() {
+            return Str.this.forceNull().new Chain();
+        } 
+        public Chain fforceNull() {
+            return Str.this.fforceNull().new Chain();
+        } 
+        //</editor-fold>
+        //__END__
 
         public boolean contains(String other) {
             return Str.this.contains(other);
-        }
-
-        public Chain left() {
-            return Str.this.left().new Chain();
-        }
-
-        public Chain right() {
-            return Str.this.right().new Chain();
-        }
-
-        public Chain both() {
-            return Str.this.both().new Chain();
-        }
-
-        public Chain forceNull() {
-            return Str.this.forceNull().new Chain();
-        }
-
-        public Chain fforceNull() {
-            return Str.this.fforceNull().new Chain();
         }
 
         public StringBuilder toStringBuilder() {
