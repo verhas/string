@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static javax0.util.string.Str.*;
 
-public class StrTest {
+public class TestStr {
 
     @Test
     @DisplayName("Test different empty and non empty strings")

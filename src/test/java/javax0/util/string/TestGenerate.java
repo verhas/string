@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static javax0.geci.api.Source.maven;
 
-public class Generate {
+public class TestGenerate {
 
     @Test
     void generateCode() throws Exception {
