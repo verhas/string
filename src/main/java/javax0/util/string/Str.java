@@ -23,6 +23,7 @@ public class Str {
     private final static int BOTH = LEFT | RIGHT;
     public final Str the = this;
     public final Condition is = new Condition();
+    public final Condition has = is;
     public final Condition does = is;
     public final AfterLast after = new AfterLast();
     public final BeforeLast before = new BeforeLast();
@@ -75,6 +76,11 @@ public class Str {
     }
 
     @Override
+    public String toString(){
+        return nullCorrection.apply(string);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -103,77 +109,62 @@ public class Str {
         return nullCorrection.apply(StringUtils.substring(string, start, end));
     }
 
-    /*!jamal
-    {{@define oneArgMethods=after|substringAfter|String,before|substringBefore|String,substring|substring|int,
-                                          between|substringBetween|String,wrap|wrap|char,wrap|wrap|String,
-                                          wrapIfMissing|wrapIfMissing|char,wrapIfMissing|wrapIfMissing|String,
-                                          truncate|truncate|int}}
-
-    */
-
-    //__END__
-
-    /*!jamal
-    //<editor-fold id="chains">{{@use global javax0.jamal.extensions.IndexStringTable}}{{@define $forsep=\s*,\s*}}
-    {{#eval {{#for X in ({{oneArgMethods}})={{@ident
-    @Generated("jamal")
-    public String {{#get 0 |X}}({{#get 2 |X}} arg) {
-        notArray();
-        return nullCorrection.apply(StringUtils.{{#get 1 |X}}(string, arg));
-    }
-    }}}}}}
-    //</editor-fold>
-    */
-    //<editor-fold id="chains">
-    @Generated("jamal")
+    //<editor-fold id="oneArgMethods">
+    @Generated("by Geci")
     public String after(String arg) {
         notArray();
         return nullCorrection.apply(StringUtils.substringAfter(string, arg));
     }
-    @Generated("jamal")
+
+    @Generated("by Geci")
     public String before(String arg) {
         notArray();
         return nullCorrection.apply(StringUtils.substringBefore(string, arg));
     }
-    @Generated("jamal")
+
+    @Generated("by Geci")
     public String substring(int arg) {
         notArray();
         return nullCorrection.apply(StringUtils.substring(string, arg));
     }
-    @Generated("jamal")
+
+    @Generated("by Geci")
     public String between(String arg) {
         notArray();
         return nullCorrection.apply(StringUtils.substringBetween(string, arg));
     }
-    @Generated("jamal")
+
+    @Generated("by Geci")
     public String wrap(char arg) {
         notArray();
         return nullCorrection.apply(StringUtils.wrap(string, arg));
     }
-    @Generated("jamal")
+
+    @Generated("by Geci")
     public String wrap(String arg) {
         notArray();
         return nullCorrection.apply(StringUtils.wrap(string, arg));
     }
-    @Generated("jamal")
+
+    @Generated("by Geci")
     public String wrapIfMissing(char arg) {
         notArray();
         return nullCorrection.apply(StringUtils.wrapIfMissing(string, arg));
     }
-    @Generated("jamal")
+
+    @Generated("by Geci")
     public String wrapIfMissing(String arg) {
         notArray();
         return nullCorrection.apply(StringUtils.wrapIfMissing(string, arg));
     }
-    @Generated("jamal")
+
+    @Generated("by Geci")
     public String truncate(int arg) {
         notArray();
         return nullCorrection.apply(StringUtils.truncate(string, arg));
     }
 
     //</editor-fold>
-    //__END__
-
 
     public String[] betweens(String open, String close) {
         notArray();
@@ -190,63 +181,45 @@ public class Str {
         notArray();
         return nullCorrection.apply(StringUtils.trim(string));
     }
-    /*!jamal
-    //<editor-fold id="">
-    {{@for X in (swapCase,lowerCase,upperCase,stripAccents,chop,chomp,uncapitalize)=
-    @Generated("jamal")
-    public String X() {
-        notArray();
-        return nullCorrection.apply(StringUtils.X(string));
-    }
-    }}
-    //</editor-fold>
-    */
-    //<editor-fold id="">
 
-    @Generated("jamal")
+    //<editor-fold id="sameNameMethods">
+    @Generated("by Geci")
     public String swapCase() {
         notArray();
         return nullCorrection.apply(StringUtils.swapCase(string));
     }
-
-    @Generated("jamal")
+    @Generated("by Geci")
     public String lowerCase() {
         notArray();
         return nullCorrection.apply(StringUtils.lowerCase(string));
     }
-
-    @Generated("jamal")
+    @Generated("by Geci")
     public String upperCase() {
         notArray();
         return nullCorrection.apply(StringUtils.upperCase(string));
     }
-
-    @Generated("jamal")
+    @Generated("by Geci")
     public String stripAccents() {
         notArray();
         return nullCorrection.apply(StringUtils.stripAccents(string));
     }
-
-    @Generated("jamal")
+    @Generated("by Geci")
     public String chop() {
         notArray();
         return nullCorrection.apply(StringUtils.chop(string));
     }
-
-    @Generated("jamal")
+    @Generated("by Geci")
     public String chomp() {
         notArray();
         return nullCorrection.apply(StringUtils.chomp(string));
     }
-
-    @Generated("jamal")
+    @Generated("by Geci")
     public String uncapitalize() {
         notArray();
         return nullCorrection.apply(StringUtils.uncapitalize(string));
     }
-
     //</editor-fold>
-    //__END__
+
     public String mid(int pos, int len) {
         notArray();
         return nullCorrection.apply(StringUtils.mid(string, pos, len));
@@ -350,20 +323,24 @@ public class Str {
         return new Str(nullIsLess, side, s -> str(s).is.empty() ? null : s, ignoreCase, is.empty() ? null : string);
     }
 
+    public Str forceEmpty() {
+        return new Str(nullIsLess, side, s -> str(s).is.blank() ? "" : s, ignoreCase, is.empty() ? null : string);
+    }
+
     public Str fforceNull() {
         return new Str(nullIsLess, side, s -> str(s).is.blank() ? null : s, ignoreCase, is.blank() ? null : string);
     }
 
     public Str left() {
-        return new Str(nullIsLess, LEFT, s -> str(s).is.blank() ? null : s, ignoreCase, string);
+        return new Str(nullIsLess, LEFT, nullCorrection, ignoreCase, string);
     }
 
     public Str right() {
-        return new Str(nullIsLess, RIGHT, s -> str(s).is.blank() ? null : s, ignoreCase, string);
+        return new Str(nullIsLess, RIGHT, nullCorrection, ignoreCase, string);
     }
 
     public Str both() {
-        return new Str(nullIsLess, BOTH, s -> str(s).is.blank() ? null : s, ignoreCase, string);
+        return new Str(nullIsLess, BOTH, nullCorrection, ignoreCase, string);
     }
 
     public class Chain {
@@ -398,118 +375,79 @@ public class Str {
             return Str.this.compare(other);
         }
 
-        /*!jamal
-        //<editor-fold id="chains">{{@use global javax0.jamal.extensions.IndexStringTable}}{{@define $forsep=\s*,\s*}}
-        {{#eval{{@for X in (after|String,before|String,substring|int,
-                                          between|String,wrap|char,wrap|String,
-                                          wrapIfMissing|char,
-                                          wrapIfMissing|String,
-                                          truncate|int,strip|String,pad|int)=
-        @Generated("jamal")
-        public Chain {{#get 0 |X}}(final {{#get 1 |X}} arg) {
-            return copy(Str.this.{{#get 0 |X}}(arg)).new Chain();
-        }
-        }}}}
-        //</editor-fold>
-        */
-        //<editor-fold id="chains">
-        @Generated("jamal")
+        //<editor-fold id="chains1">
+        @Generated("by Geci")
         public Chain after(final String arg) {
             return copy(Str.this.after(arg)).new Chain();
         }
-
-        @Generated("jamal")
+        @Generated("by Geci")
         public Chain before(final String arg) {
             return copy(Str.this.before(arg)).new Chain();
         }
-
-        @Generated("jamal")
+        @Generated("by Geci")
         public Chain substring(final int arg) {
             return copy(Str.this.substring(arg)).new Chain();
         }
-
-        @Generated("jamal")
+        @Generated("by Geci")
         public Chain between(final String arg) {
             return copy(Str.this.between(arg)).new Chain();
         }
-
-        @Generated("jamal")
+        @Generated("by Geci")
         public Chain wrap(final char arg) {
             return copy(Str.this.wrap(arg)).new Chain();
         }
-
-        @Generated("jamal")
+        @Generated("by Geci")
         public Chain wrap(final String arg) {
             return copy(Str.this.wrap(arg)).new Chain();
         }
-
-        @Generated("jamal")
+        @Generated("by Geci")
         public Chain wrapIfMissing(final char arg) {
             return copy(Str.this.wrapIfMissing(arg)).new Chain();
         }
-
-        @Generated("jamal")
+        @Generated("by Geci")
         public Chain wrapIfMissing(final String arg) {
             return copy(Str.this.wrapIfMissing(arg)).new Chain();
         }
-
-        @Generated("jamal")
+        @Generated("by Geci")
         public Chain truncate(final int arg) {
             return copy(Str.this.truncate(arg)).new Chain();
         }
-
-        @Generated("jamal")
+        @Generated("by Geci")
         public Chain strip(final String arg) {
             return copy(Str.this.strip(arg)).new Chain();
         }
-
-        @Generated("jamal")
+        @Generated("by Geci")
         public Chain pad(final int arg) {
             return copy(Str.this.pad(arg)).new Chain();
         }
-
         //</editor-fold>
-        //__END__
 
-        /*!jamal
-        //<editor-fold id="chains">{{@use global javax0.jamal.extensions.IndexStringTable}}{{@define $forsep=\s*,\s*}}
-        {{#eval{{@for X in (truncate|int|int,substring|int|int,
-                                          between|String|String,mid|int|int,
-                                          prependIfMissing|CharSequence|CharSequence...,
-                                          pad|int|char)=
-        @Generated("jamal")
-        public Chain {{#get 0 |X}}(final {{#get 1 |X}} arg1,final {{#get 2 |X}} arg2) {
-            return copy(Str.this.{{#get 0 |X}}(arg1,arg2)).new Chain();
-        } }}}}
-        //</editor-fold>
-        */
-        //<editor-fold id="chains">
-        @Generated("jamal")
+        //<editor-fold id="chains2">
+        @Generated("by Geci")
         public Chain truncate(final int arg1,final int arg2) {
             return copy(Str.this.truncate(arg1,arg2)).new Chain();
-        } 
-        @Generated("jamal")
+        }
+        @Generated("by Geci")
         public Chain substring(final int arg1,final int arg2) {
             return copy(Str.this.substring(arg1,arg2)).new Chain();
-        } 
-        @Generated("jamal")
+        }
+        @Generated("by Geci")
         public Chain between(final String arg1,final String arg2) {
             return copy(Str.this.between(arg1,arg2)).new Chain();
-        } 
-        @Generated("jamal")
+        }
+        @Generated("by Geci")
         public Chain mid(final int arg1,final int arg2) {
             return copy(Str.this.mid(arg1,arg2)).new Chain();
-        } 
-        @Generated("jamal")
+        }
+        @Generated("by Geci")
         public Chain prependIfMissing(final CharSequence arg1,final CharSequence... arg2) {
             return copy(Str.this.prependIfMissing(arg1,arg2)).new Chain();
-        } 
-        @Generated("jamal")
+        }
+        @Generated("by Geci")
         public Chain pad(final int arg1,final char arg2) {
             return copy(Str.this.pad(arg1,arg2)).new Chain();
-        } 
+        }
         //</editor-fold>
-        //__END__
 
         @Deprecated()
         public Chain trim(final int start, final int end) {
@@ -520,102 +458,84 @@ public class Str {
             return new Str(Str.this.betweens(open, close)).new Chain();
         }
 
-        /*!jamal
-        //<editor-fold id="chains">{{@define $forsep=\s*,\s*}}
-        {{@for X in (swapCase,lowerCase,upperCase,normalizeSpace,
-                                   uncapitalize,strip,stripAccents,chop,chomp)=
-        @Generated("jamal")
-        public Chain X() {
-            return copy(Str.this.X()).new Chain();
-        } }}
-        //</editor-fold>
-        */
-        //<editor-fold id="chains">
-
-        @Generated("jamal")
+        //<editor-fold id="chains3">
+        @Generated("by Geci")
         public Chain swapCase() {
             return copy(Str.this.swapCase()).new Chain();
-        } 
-        @Generated("jamal")
+        }
+        @Generated("by Geci")
         public Chain lowerCase() {
             return copy(Str.this.lowerCase()).new Chain();
-        } 
-        @Generated("jamal")
+        }
+        @Generated("by Geci")
         public Chain upperCase() {
             return copy(Str.this.upperCase()).new Chain();
-        } 
-        @Generated("jamal")
+        }
+        @Generated("by Geci")
         public Chain normalizeSpace() {
             return copy(Str.this.normalizeSpace()).new Chain();
-        } 
-        @Generated("jamal")
+        }
+        @Generated("by Geci")
         public Chain uncapitalize() {
             return copy(Str.this.uncapitalize()).new Chain();
-        } 
-        @Generated("jamal")
+        }
+        @Generated("by Geci")
         public Chain strip() {
             return copy(Str.this.strip()).new Chain();
-        } 
-        @Generated("jamal")
+        }
+        @Generated("by Geci")
         public Chain stripAccents() {
             return copy(Str.this.stripAccents()).new Chain();
-        } 
-        @Generated("jamal")
+        }
+        @Generated("by Geci")
         public Chain chop() {
             return copy(Str.this.chop()).new Chain();
-        } 
-        @Generated("jamal")
+        }
+        @Generated("by Geci")
         public Chain chomp() {
             return copy(Str.this.chomp()).new Chain();
-        } 
+        }
         //</editor-fold>
-        //__END__
 
-        /*!jamal
-        //<editor-fold id="chains">{{@define $forsep=\s*,\s*}}
-        {{@for X in (notNull,ignoreCase,nullIsMore,left,
-        right,both,forceNull,fforceNull)=
-        @Generated("jamal")
-        public Chain X() {
-            return Str.this.X().new Chain();
-        } }}
-        //</editor-fold>
-        */
-        //<editor-fold id="chains">
-
-        @Generated("jamal")
+        //<editor-fold id="chains4">
+        @Generated("by Geci")
         public Chain notNull() {
             return Str.this.notNull().new Chain();
-        } 
-        @Generated("jamal")
+        }
+        @Generated("by Geci")
         public Chain ignoreCase() {
             return Str.this.ignoreCase().new Chain();
-        } 
-        @Generated("jamal")
+        }
+        @Generated("by Geci")
         public Chain nullIsMore() {
             return Str.this.nullIsMore().new Chain();
-        } 
-        @Generated("jamal")
+        }
+        @Generated("by Geci")
         public Chain left() {
             return Str.this.left().new Chain();
-        } 
-        @Generated("jamal")
+        }
+        @Generated("by Geci")
         public Chain right() {
             return Str.this.right().new Chain();
-        } 
-        @Generated("jamal")
+        }
+        @Generated("by Geci")
         public Chain both() {
             return Str.this.both().new Chain();
-        } 
-        @Generated("jamal")
+        }
+        @Generated("by Geci")
         public Chain forceNull() {
             return Str.this.forceNull().new Chain();
-        } 
-        @Generated("jamal")
+        }
+        @Generated("by Geci")
         public Chain fforceNull() {
             return Str.this.fforceNull().new Chain();
-        } 
+        }
+        @Generated("by Geci")
+        public Chain forceEmpty() {
+            return Str.this.forceEmpty().new Chain();
+        }
         //</editor-fold>
+
         //__END__
 
         public boolean contains(String other) {
@@ -623,11 +543,11 @@ public class Str {
         }
 
         public StringBuilder toStringBuilder() {
-            return new StringBuilder(string);
+            return new StringBuilder(str(string).notNull().toString());
         }
 
         public String toString() {
-            return string;
+            return nullCorrection.apply(string);
         }
 
         public String[] toArray() {
@@ -663,6 +583,11 @@ public class Str {
             onlyArray();
             return correction.apply(StringUtils.isAnyBlank(strings));
         }
+
+        public boolean empty() {
+            onlyArray();
+            return correction.apply(StringUtils.isAnyEmpty(strings));
+        }
     }
 
     public class Condition {
@@ -672,6 +597,7 @@ public class Str {
         final public Condition not;
         public final ShorterThan shorter = new ShorterThan();
         public final LongerThan longer = new LongerThan();
+        public final As theSameLength = new As();
         final private Function<Boolean, Boolean> boolCorrection;
 
         private Condition(Condition it) {
@@ -698,6 +624,12 @@ public class Str {
 
         public boolean blank() {
             return boolCorrection.apply(StringUtils.isBlank(string));
+        }
+
+        public class As {
+            public boolean as(CharSequence other) {
+                return boolCorrection.apply(length() == other.length());
+            }
         }
 
         public class LongerThan {
@@ -742,7 +674,12 @@ public class Str {
 
         public String last(String separator) {
             notArray();
-            return nullCorrection.apply(StringUtils.substringAfterLast(string, separator));
+            if (ignoreCase) {
+                final var s = StringUtils.substringAfterLast(string.toLowerCase(), separator.toLowerCase());
+                return nullCorrection.apply(string.substring(0, s.length()));
+            } else {
+                return nullCorrection.apply(StringUtils.substringAfterLast(string, separator));
+            }
         }
     }
 
@@ -751,7 +688,12 @@ public class Str {
 
         public String last(String separator) {
             notArray();
-            return nullCorrection.apply(StringUtils.substringBeforeLast(string, separator));
+            if (ignoreCase) {
+                final var s = StringUtils.substringBeforeLast(string.toLowerCase(), separator.toLowerCase());
+                return nullCorrection.apply(string.substring(0, s.length()));
+            } else {
+                return nullCorrection.apply(StringUtils.substringBeforeLast(string, separator));
+            }
         }
     }
 

@@ -48,8 +48,7 @@
     {dependencies|
         {dependency :org.apache.commons:commons-lang3:3.5}
         {testDependency :org.mockito:mockito-all:1.10.17}
-        {testDependency :com.javax0.jamal:jamal-extensions:1.0.3-SNAPSHOT}
-        {@for MODULE in (api,core,tools,engine,annotation,jamal)={dependency :com.javax0.geci:javageci-MODULE:1.1.1-SNAPSHOT}}
+        {@for MODULE in (api,core,tools,engine,annotation)={dependency :com.javax0.geci:javageci-MODULE:1.1.2-SNAPSHOT}}
         {@for MODULE in (api,engine)={testDependency :org.junit.jupiter:junit-jupiter-MODULE:5.2.0}}
     }
 }

@@ -6,24 +6,27 @@ import org.junit.jupiter.api.Test;
 
 import static javax0.util.string.Str.*;
 
-public class TestStr {
+class TestStr {
 
     @Test
     @DisplayName("Test different empty and non empty strings")
     void testIsEmpty() {
 
-        Assertions.assertEquals("",str("abrakadabra").before("ab"));
-        Assertions.assertEquals("abrakad",str("abrakadabra").before.last("ab"));
-        Assertions.assertEquals(null,str("abrakadabra").forceNull().before("ab"));
-        Assertions.assertEquals(null,str("    abrakadabra").fforceNull().before("ab"));
+        Assertions.assertEquals("", str("abrakadabra").before("ab"));
+        Assertions.assertEquals("", str("abrakadabra").ignoreCase().before("AB"));
+        Assertions.assertEquals("abrakad", str("abrakadabra").before.last("ab"));
+        Assertions.assertEquals("abrakad", str("abrakadabra").before.the.last("ab"));
+        Assertions.assertEquals("abrakad", str("abrakadabra").ignoreCase().before.the.last("AB"));
+        Assertions.assertNull(str("abrakadabra").forceNull().before("ab"));
+        Assertions.assertNull(str("    abrakadabra").fforceNull().before("ab"));
 
         Assertions.assertFalse(string("abrakadabra").before("ab").is.not.empty());
-        Assertions.assertEquals(string("a"),string("abrakadabra").before("ka").after("br"));
+        Assertions.assertEquals(string("a"), string("abrakadabra").before("ka").after("br"));
 
         final var starting = string("alma").before.last("a");
-        Assertions.assertEquals("lm",starting.ignoreCase().after("a").toString());
-        Assertions.assertEquals("Aalm",starting.prependIfMissing("A").toString());
-        Assertions.assertEquals("alm",starting.ignoreCase().prependIfMissing("A").toString());
+        Assertions.assertEquals("lm", starting.ignoreCase().after("a").toString());
+        Assertions.assertEquals("Aalm", starting.prependIfMissing("A").toString());
+        Assertions.assertEquals("alm", starting.ignoreCase().prependIfMissing("A").toString());
 
         Assertions.assertTrue(str("").is.empty());
         Assertions.assertFalse(str("").is.not.empty());
@@ -87,6 +90,32 @@ public class TestStr {
     }
 
     @Test
+    @DisplayName("Test different any and non empty and non empty string arrays")
+    void testIsAnyEmpty() {
+        Assertions.assertTrue(strs("").is.any.empty());
+        Assertions.assertFalse(strs("").is.not.any.empty());
+        Assertions.assertFalse(strs("").is.none.empty());
+        Assertions.assertTrue(strings("").is.any.empty());
+        Assertions.assertFalse(strings("").is.none.empty());
+
+        Assertions.assertTrue(strs(" X", "", "x").is.any.empty());
+        Assertions.assertFalse(strs("X ", "", "x").is.none.empty());
+        Assertions.assertTrue(strings(" ", "").is.any.empty());
+        Assertions.assertFalse(strings("", " ").is.none.empty());
+
+        Assertions.assertTrue(strs((String[]) null).is.any.empty());
+        Assertions.assertFalse(strs((String[]) null).is.not.any.empty());
+        Assertions.assertFalse(strs((String[]) null).is.none.empty());
+        Assertions.assertTrue(strings((String[]) null).is.any.empty());
+        Assertions.assertFalse(strings((String[]) null).is.none.empty());
+
+        Assertions.assertFalse(strs("X", "x").is.any.empty());
+        Assertions.assertTrue(strs("X", "x").is.none.empty());
+        Assertions.assertFalse(strings("X", "x").is.any.empty());
+        Assertions.assertTrue(strings("X", "x").is.none.empty());
+    }
+
+    @Test
     @DisplayName("Test different any and non blank and non blank string arrays")
     void testIsAnyBlank() {
         Assertions.assertTrue(strs("").is.any.blank());
@@ -119,6 +148,7 @@ public class TestStr {
         Assertions.assertEquals("", str("").after("*"));
         Assertions.assertEquals("", str("abrajadabra").after(null));
         Assertions.assertEquals("bc", str("abc").after("a"));
+        Assertions.assertEquals("bc", str("abc").ignoreCase().after("A"));
         Assertions.assertEquals("bc", str("abc").after("a"));
         Assertions.assertEquals("cba", str("abcba").after("b"));
         Assertions.assertEquals("", str("abc").after("c"));
@@ -135,6 +165,7 @@ public class TestStr {
         Assertions.assertEquals("", str("").after.last(null));
         Assertions.assertEquals("bc", str("abc").after.last("a"));
         Assertions.assertEquals("a", str("abcba").after.last("b"));
+        Assertions.assertEquals("a", str("abcba").ignoreCase().after.last("B"));
         Assertions.assertEquals("", str("abc").after.last("c"));
         Assertions.assertEquals("", str("a").after.the.last("a"));
         Assertions.assertEquals("", str("a").after.last("z"));
@@ -181,25 +212,46 @@ public class TestStr {
         Assertions.assertTrue(str("").is.shorter.than(1));
         Assertions.assertFalse(str("A").is.shorter.than(1));
         Assertions.assertTrue(str("A").is.shorter.than("AA"));
-        Assertions.assertEquals("AA",string("AA").before.last("A").toStringBuilder().append("A").toString());
         Assertions.assertTrue(str("A").is.shorter.than(string("AA").before.last("A").toStringBuilder().append("A")));
         Assertions.assertTrue(str("AA").is.longer.than("A"));
         Assertions.assertFalse(str("A").is.longer.than(1));
         Assertions.assertTrue(str("A").is.longer.than(0));
         Assertions.assertTrue(str("A").is.not.longer.than(1));
+        Assertions.assertEquals(1, str("A").length());
+        Assertions.assertTrue(str("A").is.theSameLength.as("B"));
     }
 
+    @Test
+    @DisplayName("Convert to String builder at the end of a chain")
+    void conversionToStringBuilder() {
+        Assertions.assertEquals("AA", string("AA").before.last("A").toStringBuilder().append("A").toString());
+    }
+
+    @Test
+    @DisplayName("string null correction in toString() works")
+    void testToStringNull(){
+        Assertions.assertNull( string(null).toString());
+        Assertions.assertNotNull( string(null).notNull().toString());
+        Assertions.assertNotNull( string("").toString());
+        Assertions.assertNotNull( string("").notNull().toString());
+        Assertions.assertNull( string("").forceNull().toString());
+        Assertions.assertNotNull( string(" ").forceNull().toString());
+        Assertions.assertNull( string(" ").fforceNull().toString());
+        Assertions.assertEquals( "",string(null).forceEmpty().toString());
+        Assertions.assertEquals( "",string("").forceEmpty().toString());
+        Assertions.assertEquals( "",string(" ").forceEmpty().toString());
+    }
 
     @Test
     @DisplayName("Test padding")
     void testPadding() {
-        Assertions.assertEquals("   ",str(null).notNull().pad(3));
-        Assertions.assertEquals("   ",str("").pad(3));
-        Assertions.assertEquals(" A ",str("A").pad(3));
-        Assertions.assertEquals("  A",str("A").left().pad(3));
-        Assertions.assertEquals("A  ",str("A").right().pad(3));
-        Assertions.assertEquals(" A  ",str("A").both().pad(4));
-        Assertions.assertEquals(". A .",""+string("A").left().pad(2).right().pad(3).both().pad(5,'.'));
+        Assertions.assertEquals("   ", str(null).notNull().pad(3));
+        Assertions.assertEquals("   ", str("").pad(3));
+        Assertions.assertEquals(" A ", str("A").pad(3));
+        Assertions.assertEquals("  A", str("A").left().pad(3));
+        Assertions.assertEquals("A  ", str("A").right().pad(3));
+        Assertions.assertEquals(" A  ", str("A").both().pad(4));
+        Assertions.assertEquals(". A .", "" + string("A").left().pad(2).right().pad(3).both().pad(5, '.'));
     }
 
     @Test

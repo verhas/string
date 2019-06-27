@@ -114,41 +114,29 @@
 </dependency>
         
 <dependency>
-<groupId>com.javax0.jamal</groupId>
-<artifactId>jamal-extensions</artifactId>
-<version>1.0.3-SNAPSHOT</version>
-<scope>test</scope>
-</dependency>
-        
-<dependency>
     <groupId>com.javax0.geci</groupId>
     <artifactId>javageci-api</artifactId>
-    <version>1.1.1-SNAPSHOT</version>
+    <version>1.1.2-SNAPSHOT</version>
 </dependency>
 <dependency>
     <groupId>com.javax0.geci</groupId>
     <artifactId>javageci-core</artifactId>
-    <version>1.1.1-SNAPSHOT</version>
+    <version>1.1.2-SNAPSHOT</version>
 </dependency>
 <dependency>
     <groupId>com.javax0.geci</groupId>
     <artifactId>javageci-tools</artifactId>
-    <version>1.1.1-SNAPSHOT</version>
+    <version>1.1.2-SNAPSHOT</version>
 </dependency>
 <dependency>
     <groupId>com.javax0.geci</groupId>
     <artifactId>javageci-engine</artifactId>
-    <version>1.1.1-SNAPSHOT</version>
+    <version>1.1.2-SNAPSHOT</version>
 </dependency>
 <dependency>
     <groupId>com.javax0.geci</groupId>
     <artifactId>javageci-annotation</artifactId>
-    <version>1.1.1-SNAPSHOT</version>
-</dependency>
-<dependency>
-    <groupId>com.javax0.geci</groupId>
-    <artifactId>javageci-jamal</artifactId>
-    <version>1.1.1-SNAPSHOT</version>
+    <version>1.1.2-SNAPSHOT</version>
 </dependency>
         
 <dependency>
