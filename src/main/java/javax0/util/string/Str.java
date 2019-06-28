@@ -46,7 +46,7 @@ public class Str {
         this.strings = null;
         this.isArrayOp = false;
         this.ignoreCase = ignoreCase;
-        this.nullCorrection = nullCorrection;
+        this.nullCorrection = Objects.requireNonNullElse(nullCorrection, s -> s);
     }
 
     private Str(String... string) {
@@ -54,7 +54,7 @@ public class Str {
         this.strings = string;
         this.isArrayOp = true;
         this.ignoreCase = false;
-        this.nullCorrection = null;
+        this.nullCorrection = s -> s;
         this.side = BOTH;
         this.nullIsLess = true;
     }
@@ -675,8 +675,9 @@ public class Str {
         public String last(String separator) {
             notArray();
             if (ignoreCase) {
-                final var s = StringUtils.substringAfterLast(string.toLowerCase(), separator.toLowerCase());
-                return nullCorrection.apply(string.substring(0, s.length()));
+                final var string0 = str(string).notNull().toString();
+                final var s = StringUtils.substringAfterLast(string0.toLowerCase(), str(separator).notNull().toString().toLowerCase());
+                return nullCorrection.apply(string0.substring(0, s.length()));
             } else {
                 return nullCorrection.apply(StringUtils.substringAfterLast(string, separator));
             }
@@ -689,8 +690,9 @@ public class Str {
         public String last(String separator) {
             notArray();
             if (ignoreCase) {
-                final var s = StringUtils.substringBeforeLast(string.toLowerCase(), separator.toLowerCase());
-                return nullCorrection.apply(string.substring(0, s.length()));
+                final var string0 = str(string).notNull().toString();
+                final var s = StringUtils.substringBeforeLast(string0.toLowerCase(), str(separator).notNull().toString().toLowerCase());
+                return nullCorrection.apply(string0.substring(0, s.length()));
             } else {
                 return nullCorrection.apply(StringUtils.substringBeforeLast(string, separator));
             }
