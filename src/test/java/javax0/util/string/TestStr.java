@@ -157,6 +157,13 @@ class TestStr {
     }
 
     @Test
+    @DisplayName("test substring functionality")
+    void testSubstring(){
+        Assertions.assertNull(str(null).substring(0,2));
+        Assertions.assertEquals("lm",str("alma").substring(1,3));
+    }
+
+    @Test
     @DisplayName("Test substringAfterLast functionality")
     void testAfterLast() {
         Assertions.assertNull(str(null).after.last(""));
@@ -174,6 +181,22 @@ class TestStr {
         Assertions.assertEquals(" ", str("a ").after.last("a"));
         Assertions.assertEquals(" ", str("a ").forceNull().after.last("a"));
         Assertions.assertNull(str("a ").fforceNull().after.last("a"));
+
+        Assertions.assertNull(string(null).after.last("").toString());
+        Assertions.assertEquals("", string("").after.last("").toString());
+        Assertions.assertEquals("", string("").after.last("").toString());
+        Assertions.assertEquals("", string("").after.last(null).toString());
+        Assertions.assertEquals("bc", string("abc").after.last("a").toString());
+        Assertions.assertEquals("a", string("abcba").after.last("b").toString());
+        Assertions.assertEquals("a", string("abcba").ignoreCase().after.last("B").toString());
+        Assertions.assertEquals("", string("abc").after.last("c").toString());
+        Assertions.assertEquals("", string("a").after.the.last("a").toString());
+        Assertions.assertEquals("", string("a").after.last("z").toString());
+        Assertions.assertEquals("", string(null).notNull().after.last("").toString());
+        Assertions.assertNull(string("").forceNull().after.last("").toString());
+        Assertions.assertEquals(" ", string("a ").after.last("a").toString());
+        Assertions.assertEquals(" ", string("a ").forceNull().after.last("a").toString());
+        Assertions.assertNull(string("a ").fforceNull().after.last("a").toString());
     }
 
 
@@ -203,7 +226,6 @@ class TestStr {
         Assertions.assertEquals("a", str("a").before.last(null));
         Assertions.assertEquals("a", str("a").before.last(""));
     }
-
 
     @Test
     @DisplayName("Test length comparison")

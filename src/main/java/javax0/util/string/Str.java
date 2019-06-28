@@ -76,7 +76,7 @@ public class Str {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return nullCorrection.apply(string);
     }
 
@@ -109,29 +109,27 @@ public class Str {
         return nullCorrection.apply(StringUtils.substring(string, start, end));
     }
 
-    //<editor-fold id="oneArgMethods">
-    @Generated("by Geci")
-    public String after(String arg) {
-        notArray();
-        return nullCorrection.apply(StringUtils.substringAfter(string, arg));
-    }
-
-    @Generated("by Geci")
     public String before(String arg) {
         notArray();
-        return nullCorrection.apply(StringUtils.substringBefore(string, arg));
+        return nullCorrection.apply(substringBefore(string, arg, ignoreCase));
     }
+
+    public String after(String arg) {
+        notArray();
+        return nullCorrection.apply(substringAfter(string, arg, ignoreCase));
+    }
+
+    public String between(String arg) {
+        notArray();
+        return nullCorrection.apply(substringBetween(string, arg, ignoreCase));
+    }
+
+    //<editor-fold id="oneArgMethods">
 
     @Generated("by Geci")
     public String substring(int arg) {
         notArray();
         return nullCorrection.apply(StringUtils.substring(string, arg));
-    }
-
-    @Generated("by Geci")
-    public String between(String arg) {
-        notArray();
-        return nullCorrection.apply(StringUtils.substringBetween(string, arg));
     }
 
     @Generated("by Geci")
@@ -173,7 +171,7 @@ public class Str {
 
     public String between(String open, String close) {
         notArray();
-        return nullCorrection.apply(StringUtils.substringBetween(string, open, close));
+        return nullCorrection.apply(substringBetween(string, open, close, ignoreCase));
     }
 
     @Deprecated()
@@ -188,31 +186,37 @@ public class Str {
         notArray();
         return nullCorrection.apply(StringUtils.swapCase(string));
     }
+
     @Generated("by Geci")
     public String lowerCase() {
         notArray();
         return nullCorrection.apply(StringUtils.lowerCase(string));
     }
+
     @Generated("by Geci")
     public String upperCase() {
         notArray();
         return nullCorrection.apply(StringUtils.upperCase(string));
     }
+
     @Generated("by Geci")
     public String stripAccents() {
         notArray();
         return nullCorrection.apply(StringUtils.stripAccents(string));
     }
+
     @Generated("by Geci")
     public String chop() {
         notArray();
         return nullCorrection.apply(StringUtils.chop(string));
     }
+
     @Generated("by Geci")
     public String chomp() {
         notArray();
         return nullCorrection.apply(StringUtils.chomp(string));
     }
+
     @Generated("by Geci")
     public String uncapitalize() {
         notArray();
@@ -380,42 +384,52 @@ public class Str {
         public Chain after(final String arg) {
             return copy(Str.this.after(arg)).new Chain();
         }
+
         @Generated("by Geci")
         public Chain before(final String arg) {
             return copy(Str.this.before(arg)).new Chain();
         }
+
         @Generated("by Geci")
         public Chain substring(final int arg) {
             return copy(Str.this.substring(arg)).new Chain();
         }
+
         @Generated("by Geci")
         public Chain between(final String arg) {
             return copy(Str.this.between(arg)).new Chain();
         }
+
         @Generated("by Geci")
         public Chain wrap(final char arg) {
             return copy(Str.this.wrap(arg)).new Chain();
         }
+
         @Generated("by Geci")
         public Chain wrap(final String arg) {
             return copy(Str.this.wrap(arg)).new Chain();
         }
+
         @Generated("by Geci")
         public Chain wrapIfMissing(final char arg) {
             return copy(Str.this.wrapIfMissing(arg)).new Chain();
         }
+
         @Generated("by Geci")
         public Chain wrapIfMissing(final String arg) {
             return copy(Str.this.wrapIfMissing(arg)).new Chain();
         }
+
         @Generated("by Geci")
         public Chain truncate(final int arg) {
             return copy(Str.this.truncate(arg)).new Chain();
         }
+
         @Generated("by Geci")
         public Chain strip(final String arg) {
             return copy(Str.this.strip(arg)).new Chain();
         }
+
         @Generated("by Geci")
         public Chain pad(final int arg) {
             return copy(Str.this.pad(arg)).new Chain();
@@ -424,28 +438,33 @@ public class Str {
 
         //<editor-fold id="chains2">
         @Generated("by Geci")
-        public Chain truncate(final int arg1,final int arg2) {
-            return copy(Str.this.truncate(arg1,arg2)).new Chain();
+        public Chain truncate(final int arg1, final int arg2) {
+            return copy(Str.this.truncate(arg1, arg2)).new Chain();
         }
+
         @Generated("by Geci")
-        public Chain substring(final int arg1,final int arg2) {
-            return copy(Str.this.substring(arg1,arg2)).new Chain();
+        public Chain substring(final int arg1, final int arg2) {
+            return copy(Str.this.substring(arg1, arg2)).new Chain();
         }
+
         @Generated("by Geci")
-        public Chain between(final String arg1,final String arg2) {
-            return copy(Str.this.between(arg1,arg2)).new Chain();
+        public Chain between(final String arg1, final String arg2) {
+            return copy(Str.this.between(arg1, arg2)).new Chain();
         }
+
         @Generated("by Geci")
-        public Chain mid(final int arg1,final int arg2) {
-            return copy(Str.this.mid(arg1,arg2)).new Chain();
+        public Chain mid(final int arg1, final int arg2) {
+            return copy(Str.this.mid(arg1, arg2)).new Chain();
         }
+
         @Generated("by Geci")
-        public Chain prependIfMissing(final CharSequence arg1,final CharSequence... arg2) {
-            return copy(Str.this.prependIfMissing(arg1,arg2)).new Chain();
+        public Chain prependIfMissing(final CharSequence arg1, final CharSequence... arg2) {
+            return copy(Str.this.prependIfMissing(arg1, arg2)).new Chain();
         }
+
         @Generated("by Geci")
-        public Chain pad(final int arg1,final char arg2) {
-            return copy(Str.this.pad(arg1,arg2)).new Chain();
+        public Chain pad(final int arg1, final char arg2) {
+            return copy(Str.this.pad(arg1, arg2)).new Chain();
         }
         //</editor-fold>
 
@@ -463,34 +482,42 @@ public class Str {
         public Chain swapCase() {
             return copy(Str.this.swapCase()).new Chain();
         }
+
         @Generated("by Geci")
         public Chain lowerCase() {
             return copy(Str.this.lowerCase()).new Chain();
         }
+
         @Generated("by Geci")
         public Chain upperCase() {
             return copy(Str.this.upperCase()).new Chain();
         }
+
         @Generated("by Geci")
         public Chain normalizeSpace() {
             return copy(Str.this.normalizeSpace()).new Chain();
         }
+
         @Generated("by Geci")
         public Chain uncapitalize() {
             return copy(Str.this.uncapitalize()).new Chain();
         }
+
         @Generated("by Geci")
         public Chain strip() {
             return copy(Str.this.strip()).new Chain();
         }
+
         @Generated("by Geci")
         public Chain stripAccents() {
             return copy(Str.this.stripAccents()).new Chain();
         }
+
         @Generated("by Geci")
         public Chain chop() {
             return copy(Str.this.chop()).new Chain();
         }
+
         @Generated("by Geci")
         public Chain chomp() {
             return copy(Str.this.chomp()).new Chain();
@@ -502,34 +529,42 @@ public class Str {
         public Chain notNull() {
             return Str.this.notNull().new Chain();
         }
+
         @Generated("by Geci")
         public Chain ignoreCase() {
             return Str.this.ignoreCase().new Chain();
         }
+
         @Generated("by Geci")
         public Chain nullIsMore() {
             return Str.this.nullIsMore().new Chain();
         }
+
         @Generated("by Geci")
         public Chain left() {
             return Str.this.left().new Chain();
         }
+
         @Generated("by Geci")
         public Chain right() {
             return Str.this.right().new Chain();
         }
+
         @Generated("by Geci")
         public Chain both() {
             return Str.this.both().new Chain();
         }
+
         @Generated("by Geci")
         public Chain forceNull() {
             return Str.this.forceNull().new Chain();
         }
+
         @Generated("by Geci")
         public Chain fforceNull() {
             return Str.this.fforceNull().new Chain();
         }
+
         @Generated("by Geci")
         public Chain forceEmpty() {
             return Str.this.forceEmpty().new Chain();
@@ -615,7 +650,11 @@ public class Str {
         }
 
         public boolean contain(String other) {
-            return boolCorrection.apply(StringUtils.contains(string, other));
+            if (ignoreCase) {
+                return boolCorrection.apply(StringUtils.containsIgnoreCase(string, other));
+            } else {
+                return boolCorrection.apply(StringUtils.contains(string, other));
+            }
         }
 
         public boolean empty() {
@@ -699,4 +738,65 @@ public class Str {
         }
     }
 
+    private static int indexOf(String base, String search, boolean ignoreCase) {
+        if (ignoreCase) {
+            return base.toLowerCase().indexOf(search.toLowerCase());
+        } else {
+            return base.indexOf(search);
+        }
+    }
+
+    private static int indexOf(String base, String search, int start, boolean ignoreCase) {
+        if (ignoreCase) {
+            return base.toLowerCase().indexOf(search.toLowerCase(), start);
+        } else {
+            return base.indexOf(search, start);
+        }
+    }
+
+    private static String substringAfter(final String str, final String separator, boolean ignoreCase) {
+        if (StringUtils.isEmpty(str)) {
+            return str;
+        }
+        if (separator == null) {
+            return StringUtils.EMPTY;
+        }
+        final int pos = indexOf(str, separator, ignoreCase);
+        if (pos == StringUtils.INDEX_NOT_FOUND) {
+            return StringUtils.EMPTY;
+        }
+        return str.substring(pos + separator.length());
+    }
+
+    private static String substringBefore(final String str, final String separator, boolean ignoreCase) {
+        if (StringUtils.isEmpty(str) || separator == null) {
+            return str;
+        }
+        if (separator.isEmpty()) {
+            return StringUtils.EMPTY;
+        }
+        final int pos = indexOf(str, separator, ignoreCase);
+        if (pos == StringUtils.INDEX_NOT_FOUND) {
+            return str;
+        }
+        return str.substring(0, pos);
+    }
+
+    private static String substringBetween(final String str, final String tag, boolean ignoreCase) {
+        return substringBetween(str, tag, tag, ignoreCase);
+    }
+
+    public static String substringBetween(final String str, final String open, final String close, boolean ignoreCase) {
+        if (str == null || open == null || close == null) {
+            return null;
+        }
+        final int start = indexOf(str, open, ignoreCase);
+        if (start != StringUtils.INDEX_NOT_FOUND) {
+            final int end = indexOf(str, close, start + open.length(), ignoreCase);
+            if (end != StringUtils.INDEX_NOT_FOUND) {
+                return str.substring(start + open.length(), end);
+            }
+        }
+        return null;
+    }
 }

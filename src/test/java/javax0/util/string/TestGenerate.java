@@ -15,18 +15,18 @@ class TestGenerate {
         Assertions.assertFalse(
                 geci.source(maven().mainSource()).only("Str.java")
                         .register(Repeated.builder()
-                                .values("after|substringAfter|String,before|substringBefore|String,substring|substring|int," +
-                                        "between|substringBetween|String,wrap|wrap|char,wrap|wrap|String," +
-                                        "wrapIfMissing|wrapIfMissing|char,wrapIfMissing|wrapIfMissing|String," +
-                                        "truncate|truncate|int")
+                                .values("substring|int," +
+                                        "wrap|char,wrap|String," +
+                                        "wrapIfMissing|char,wrapIfMissing|String," +
+                                        "truncate|int")
                                 .define((ctx, s) -> {
                                     final var p = s.split("\\|");
-                                    ctx.segment().param("method", p[0], "remote", p[1], "type", p[2]);
+                                    ctx.segment().param("method", p[0], "type", p[1]);
                                 })
                                 .template("```@Generated(\"by Geci\")\n" +
                                         "public String {{method}}({{type}} arg) {\n" +
                                         "    notArray();\n" +
-                                        "    return nullCorrection.apply(StringUtils.{{remote}}(string, arg));\n" +
+                                        "    return nullCorrection.apply(StringUtils.{{method}}(string, arg));\n" +
                                         "}\n```")
                                 .mnemonic("oneArgMethods")
                                 .build())
