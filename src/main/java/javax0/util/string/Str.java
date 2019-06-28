@@ -80,6 +80,10 @@ public class Str {
         return nullCorrection.apply(string);
     }
 
+    public String[] toArray() {
+        return strings;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -125,7 +129,6 @@ public class Str {
     }
 
     //<editor-fold id="oneArgMethods">
-
     @Generated("by Geci")
     public String substring(int arg) {
         notArray();
@@ -186,37 +189,31 @@ public class Str {
         notArray();
         return nullCorrection.apply(StringUtils.swapCase(string));
     }
-
     @Generated("by Geci")
     public String lowerCase() {
         notArray();
         return nullCorrection.apply(StringUtils.lowerCase(string));
     }
-
     @Generated("by Geci")
     public String upperCase() {
         notArray();
         return nullCorrection.apply(StringUtils.upperCase(string));
     }
-
     @Generated("by Geci")
     public String stripAccents() {
         notArray();
         return nullCorrection.apply(StringUtils.stripAccents(string));
     }
-
     @Generated("by Geci")
     public String chop() {
         notArray();
         return nullCorrection.apply(StringUtils.chop(string));
     }
-
     @Generated("by Geci")
     public String chomp() {
         notArray();
         return nullCorrection.apply(StringUtils.chomp(string));
     }
-
     @Generated("by Geci")
     public String uncapitalize() {
         notArray();
@@ -236,13 +233,19 @@ public class Str {
 
     public String strip(final String stripChars) {
         notArray();
+        final String stripChars0;
+        if( ignoreCase && stripChars != null ){
+            stripChars0 = stripChars + StringUtils.swapCase(stripChars);
+        }else{
+            stripChars0 = stripChars;
+        }
         switch (side) {
             case LEFT:
-                return nullCorrection.apply(StringUtils.stripStart(string, stripChars));
+                return nullCorrection.apply(StringUtils.stripStart(string, stripChars0));
             case RIGHT:
-                return nullCorrection.apply(StringUtils.stripEnd(string, stripChars));
+                return nullCorrection.apply(StringUtils.stripEnd(string, stripChars0));
             case BOTH:
-                return nullCorrection.apply(StringUtils.strip(string, stripChars));
+                return nullCorrection.apply(StringUtils.strip(string, stripChars0));
         }
         throw new IllegalArgumentException("SNAFU side value is " + side);
     }
@@ -283,7 +286,7 @@ public class Str {
         return nullCorrection.apply(StringUtils.truncate(string, offset, maxWidth));
     }
 
-    public int compare(String other) {
+    public int compareTo(String other) {
         notArray();
         if (ignoreCase) {
             return StringUtils.compareIgnoreCase(string, other, nullIsLess);
@@ -328,7 +331,7 @@ public class Str {
     }
 
     public Str forceEmpty() {
-        return new Str(nullIsLess, side, s -> str(s).is.blank() ? "" : s, ignoreCase, is.empty() ? null : string);
+        return new Str(nullIsLess, side, s -> str(s).is.blank() ? "" : s, ignoreCase, string == null || is.blank() ? "" : string);
     }
 
     public Str fforceNull() {
@@ -375,61 +378,47 @@ public class Str {
             return Str.this.length();
         }
 
-        public int compare(String other) {
-            return Str.this.compare(other);
-        }
-
         //<editor-fold id="chains1">
         @Generated("by Geci")
         public Chain after(final String arg) {
             return copy(Str.this.after(arg)).new Chain();
         }
-
         @Generated("by Geci")
         public Chain before(final String arg) {
             return copy(Str.this.before(arg)).new Chain();
         }
-
         @Generated("by Geci")
         public Chain substring(final int arg) {
             return copy(Str.this.substring(arg)).new Chain();
         }
-
         @Generated("by Geci")
         public Chain between(final String arg) {
             return copy(Str.this.between(arg)).new Chain();
         }
-
         @Generated("by Geci")
         public Chain wrap(final char arg) {
             return copy(Str.this.wrap(arg)).new Chain();
         }
-
         @Generated("by Geci")
         public Chain wrap(final String arg) {
             return copy(Str.this.wrap(arg)).new Chain();
         }
-
         @Generated("by Geci")
         public Chain wrapIfMissing(final char arg) {
             return copy(Str.this.wrapIfMissing(arg)).new Chain();
         }
-
         @Generated("by Geci")
         public Chain wrapIfMissing(final String arg) {
             return copy(Str.this.wrapIfMissing(arg)).new Chain();
         }
-
         @Generated("by Geci")
         public Chain truncate(final int arg) {
             return copy(Str.this.truncate(arg)).new Chain();
         }
-
         @Generated("by Geci")
         public Chain strip(final String arg) {
             return copy(Str.this.strip(arg)).new Chain();
         }
-
         @Generated("by Geci")
         public Chain pad(final int arg) {
             return copy(Str.this.pad(arg)).new Chain();
@@ -438,33 +427,28 @@ public class Str {
 
         //<editor-fold id="chains2">
         @Generated("by Geci")
-        public Chain truncate(final int arg1, final int arg2) {
-            return copy(Str.this.truncate(arg1, arg2)).new Chain();
+        public Chain truncate(final int a,final int b) {
+            return copy(Str.this.truncate(a,b)).new Chain();
         }
-
         @Generated("by Geci")
-        public Chain substring(final int arg1, final int arg2) {
-            return copy(Str.this.substring(arg1, arg2)).new Chain();
+        public Chain substring(final int a,final int b) {
+            return copy(Str.this.substring(a,b)).new Chain();
         }
-
         @Generated("by Geci")
-        public Chain between(final String arg1, final String arg2) {
-            return copy(Str.this.between(arg1, arg2)).new Chain();
+        public Chain between(final String a,final String b) {
+            return copy(Str.this.between(a,b)).new Chain();
         }
-
         @Generated("by Geci")
-        public Chain mid(final int arg1, final int arg2) {
-            return copy(Str.this.mid(arg1, arg2)).new Chain();
+        public Chain mid(final int a,final int b) {
+            return copy(Str.this.mid(a,b)).new Chain();
         }
-
         @Generated("by Geci")
-        public Chain prependIfMissing(final CharSequence arg1, final CharSequence... arg2) {
-            return copy(Str.this.prependIfMissing(arg1, arg2)).new Chain();
+        public Chain prependIfMissing(final CharSequence a,final CharSequence... b) {
+            return copy(Str.this.prependIfMissing(a,b)).new Chain();
         }
-
         @Generated("by Geci")
-        public Chain pad(final int arg1, final char arg2) {
-            return copy(Str.this.pad(arg1, arg2)).new Chain();
+        public Chain pad(final int a,final char b) {
+            return copy(Str.this.pad(a,b)).new Chain();
         }
         //</editor-fold>
 
@@ -477,101 +461,87 @@ public class Str {
             return new Str(Str.this.betweens(open, close)).new Chain();
         }
 
-        //<editor-fold id="chains3">
+        //<editor-fold id="chains0">
         @Generated("by Geci")
         public Chain swapCase() {
             return copy(Str.this.swapCase()).new Chain();
         }
-
         @Generated("by Geci")
         public Chain lowerCase() {
             return copy(Str.this.lowerCase()).new Chain();
         }
-
         @Generated("by Geci")
         public Chain upperCase() {
             return copy(Str.this.upperCase()).new Chain();
         }
-
         @Generated("by Geci")
         public Chain normalizeSpace() {
             return copy(Str.this.normalizeSpace()).new Chain();
         }
-
         @Generated("by Geci")
         public Chain uncapitalize() {
             return copy(Str.this.uncapitalize()).new Chain();
         }
-
         @Generated("by Geci")
         public Chain strip() {
             return copy(Str.this.strip()).new Chain();
         }
-
         @Generated("by Geci")
         public Chain stripAccents() {
             return copy(Str.this.stripAccents()).new Chain();
         }
-
         @Generated("by Geci")
         public Chain chop() {
             return copy(Str.this.chop()).new Chain();
         }
-
         @Generated("by Geci")
         public Chain chomp() {
             return copy(Str.this.chomp()).new Chain();
         }
         //</editor-fold>
 
-        //<editor-fold id="chains4">
+        //<editor-fold id="chains0_noCopy">
         @Generated("by Geci")
         public Chain notNull() {
             return Str.this.notNull().new Chain();
         }
-
         @Generated("by Geci")
         public Chain ignoreCase() {
             return Str.this.ignoreCase().new Chain();
         }
-
         @Generated("by Geci")
         public Chain nullIsMore() {
             return Str.this.nullIsMore().new Chain();
         }
-
         @Generated("by Geci")
         public Chain left() {
             return Str.this.left().new Chain();
         }
-
         @Generated("by Geci")
         public Chain right() {
             return Str.this.right().new Chain();
         }
-
         @Generated("by Geci")
         public Chain both() {
             return Str.this.both().new Chain();
         }
-
         @Generated("by Geci")
         public Chain forceNull() {
             return Str.this.forceNull().new Chain();
         }
-
         @Generated("by Geci")
         public Chain fforceNull() {
             return Str.this.fforceNull().new Chain();
         }
-
         @Generated("by Geci")
         public Chain forceEmpty() {
             return Str.this.forceEmpty().new Chain();
         }
         //</editor-fold>
 
-        //__END__
+        public int compareTo(String other) {
+            return Str.this.compareTo(other);
+        }
 
         public boolean contains(String other) {
             return Str.this.contains(other);

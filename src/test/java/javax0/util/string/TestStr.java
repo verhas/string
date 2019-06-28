@@ -276,6 +276,37 @@ class TestStr {
         Assertions.assertEquals(". A .", "" + string("A").left().pad(2).right().pad(3).both().pad(5, '.'));
     }
 
+
+    @Test
+    @DisplayName("Normalizing space")
+    void testSpaceNormalization(){
+        Assertions.assertEquals("The red fox jumped over the boring job.", str("The  red    fox  jumped   over  the boring job.").normalizeSpace());
+        Assertions.assertEquals("The red fox jumped over the boring job.", string("The  red    fox  jumped   over  the boring job.").normalizeSpace().toString());
+    }
+
+    @Test
+    @DisplayName("Characters can be stripped from left, right and both sides")
+    void testStrip(){
+        Assertions.assertEquals("", str(null).notNull().strip());
+        Assertions.assertEquals("lm", str("alma").notNull().strip("a"));
+        Assertions.assertEquals("lmA", str("almA").notNull().strip("a"));
+        Assertions.assertEquals("lm", str("almA").ignoreCase().notNull().strip("a"));
+
+        Assertions.assertEquals("lma", str("alma").notNull().left().strip("a"));
+        Assertions.assertEquals("lmA", str("almA").notNull().left().strip("a"));
+        Assertions.assertEquals("lmA", str("almA").ignoreCase().notNull().left().strip("a"));
+
+        Assertions.assertEquals("alm", str("alma").notNull().right().strip("a"));
+        Assertions.assertEquals("almA", str("almA").notNull().right().strip("a"));
+        Assertions.assertEquals("alm", str("almA").ignoreCase().notNull().right().strip("a"));
+    }
+    @Test
+    @DisplayName("Strings expression can be converted to string array")
+    void testToArray(){
+        Assertions.assertArrayEquals(new String[]{"a","b","c"}, strings("a","b","c").toArray());
+        Assertions.assertArrayEquals(new String[]{"a","b","c"}, strs("a","b","c").toArray());
+    }
+
     @Test
     @DisplayName("Test contains")
     void testContains() {

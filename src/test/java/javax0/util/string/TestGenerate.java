@@ -65,8 +65,8 @@ class TestGenerate {
                                     ctx.segment().param("method", p[0], "type1", p[1], "type2", p[2]);
                                 })
                                 .template("```@Generated(\"by Geci\")\n" +
-                                        "public Chain {{method}}(final {{type1}} arg1,final {{type2}} arg2) {\n" +
-                                        "    return copy(Str.this.{{method}}(arg1,arg2)).new Chain();\n" +
+                                        "public Chain {{method}}(final {{type1}} a,final {{type2}} b) {\n" +
+                                        "    return copy(Str.this.{{method}}(a,b)).new Chain();\n" +
                                         "}```")
                                 .mnemonic("chains2")
                                 .build())
@@ -76,7 +76,7 @@ class TestGenerate {
                                         "public Chain {{value}}() {\n" +
                                         "    return copy(Str.this.{{value}}()).new Chain();\n" +
                                         "}```")
-                                .mnemonic("chains3")
+                                .mnemonic("chains0")
                                 .build())
                         .register(Repeated.builder()
                                 .values("notNull,ignoreCase,nullIsMore,left,right,both,forceNull,fforceNull,forceEmpty")
@@ -84,7 +84,7 @@ class TestGenerate {
                                         "public Chain {{value}}() {\n" +
                                         "    return Str.this.{{value}}().new Chain();\n" +
                                         "}```")
-                                .mnemonic("chains4")
+                                .mnemonic("chains0_noCopy")
                                 .build())
                         .generate(),
                 geci.failed()
