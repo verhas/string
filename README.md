@@ -1,4 +1,4 @@
-# String utilities
+# Fluent API to Apache Commons StringUtils
 
 This library is simply a fluent wrapper around Apache StringUtils 
 methods.
@@ -10,10 +10,10 @@ dealing with strings. The main advantage of StringUtils is that the
 implementation is there, tested, a lot of people are using them. These
 little utilities make coding easier. There is one thing with this class.
 
-> StringUtils method names and ugly and not chain-able.
+> StringUtils method names are ugly and they are not chain-able.
 
 They do not provide a fluent readable API. This library is a simple
-fluent API wrapoper around StringUtils that will make some code that
+fluent API wrapper around StringUtils that will make some code that
 heavily use StringUtils even more readable.
 
 ## How to use
@@ -33,7 +33,7 @@ A bit more readable, or not. It still depends on your taste and what you
 got used to.
 
 It gets more interesting when you want to have the string before the
-last occurence of `ab`. Using StringUtils you write
+last occurrence of `ab`. Using StringUtils you write
 `StringUtils.substringBeforeLast("abrakadabra","ab")`. A bit different
 functionality and a new method. Using Javax0::string you write this as
 the following:
@@ -48,7 +48,7 @@ or even (just to be grammatically correct)
 str("abrakadabra").before.the.last("ab")
 ```
 
-What do you write when you want the same but you do not care the
+What do you write when you want the same but you do not care about the
 character casing? Something like
 `StringUtils.substringBeforeIgnoreCase("abrakadabra","AB")` does not
 exists. On the other hand you can write
@@ -64,7 +64,7 @@ and similarly
 ```
  
 Without remembering all the different method names you can use all the
-combinations replacing `before` with `after` .
+combinations replacing `before` with `after`.
  
 StringUtils also has `prependIfMissing()` and
 `prependIfMissingIgnoreCase()`. Using Javax0::string you can simply
@@ -121,7 +121,7 @@ In Javax0::string you write
 strs("a","b").is.any.blank()
 ```
 
-and similarl you can negate the expression writing
+and similarly you can negate the expression writing
 
 ```java
 strs("a","b").is.not.any.blank()
@@ -172,8 +172,8 @@ str("A").right().pad(3)
 
 ## Null handling
 
-When you have a `null` instead of a string, when you start with
-`str(null)` it will cause no harm. On the output you will get what was
+When you have a `null` instead of a string when you start with
+`str(null)` it will cause no harm. On the output, you will get what was
 going in on the input unless you want something else. Because the API is
 fluent you can write for any call something like
 
@@ -182,20 +182,20 @@ str("abrakadabra").notNull().before("ab")
 ```
 
 to guarantee that the result will be empty string even if the input was
-`null`. On the other hand you can
+`null`. On the other hand, you can
 
 ```java
 str("abrakadabra").forceNull().before("ab")
 ```
 
-force that the result is `null` instead of empty string and even more
+force that the result is `null` instead of an empty string and even more
 you can write
 
 ```java
 str("abrakadabra").fforceNull().before("ab")
 ```
 
-to get null not only for empty strings, but also for blank results.
+to get null not only for empty strings but also for blank results.
 
 ```java
 str("abrakadabra").forceEmpty().before("ab")
@@ -207,9 +207,9 @@ will get you empty string even if the result is `null` or blank.
 
 When you start the string expression with the static method `str()` then
 the result after calling some of the string methods is a string and with
-that the call chain ends. Sometimes this is the best approach, but other
-times you want to write longer call chains. In that case you have to use
-the longer named static method `string()` or `strings()` in plural in
+that, the call chain ends. Sometimes this is the best approach, but other
+times you want to write longer call chains. In that case, you have to use
+the longer named static method `string()` or `strings()` in the plural in
 case the methods work on multiple strings.
 
 Using `string()` or `strings()` you can write longer chains, like
