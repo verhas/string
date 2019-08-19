@@ -19,9 +19,11 @@ class TestGenerate {
      * functionality.
      */
     public static final String SINGLE_STRING_ARGUMENT_METHODS =
-            "deleteWhitespace,trim,swapCase,lowerCase,upperCase,"
-                    + "normalizeSpace,stripAccents,chop,chomp,uncapitalize,capitalize,"
-                    + "getDigits,reverse";
+            String.join(",",
+                    "deleteWhitespace", "trim", "swapCase",
+                    "lowerCase", "upperCase", "normalizeSpace",
+                    "stripAccents", "chop", "chomp", "uncapitalize",
+                    "capitalize", "getDigits", "reverse");
 
     @Test
     void generateCode() throws Exception {
