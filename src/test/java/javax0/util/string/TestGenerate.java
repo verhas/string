@@ -31,7 +31,7 @@ class TestGenerate {
                                 .mnemonic("oneArgMethods")
                                 .build())
                         .register(Repeated.builder()
-                                .values("swapCase,lowerCase,upperCase,stripAccents,chop,chomp,uncapitalize")
+                                .values("swapCase,lowerCase,upperCase,stripAccents,chop,chomp,uncapitalize,capitalize")
                                 .template("```@Generated(\"by Geci\")\n" +
                                         "public String {{value}}() {\n" +
                                         "    notArray();\n" +

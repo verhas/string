@@ -219,6 +219,11 @@ public class Str {
         notArray();
         return nullCorrection.apply(StringUtils.uncapitalize(string));
     }
+    @Generated("by Geci")
+    public String capitalize() {
+        notArray();
+        return nullCorrection.apply(StringUtils.capitalize(string));
+    }
     //</editor-fold>
 
     public String mid(int pos, int len) {

@@ -1,5 +1,6 @@
 package javax0.util.string;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -103,11 +104,11 @@ class TestStr {
         Assertions.assertTrue(strings(" ", "").is.any.empty());
         Assertions.assertFalse(strings("", " ").is.none.empty());
 
-        Assertions.assertTrue(strs((String[]) null).is.any.empty());
-        Assertions.assertFalse(strs((String[]) null).is.not.any.empty());
-        Assertions.assertFalse(strs((String[]) null).is.none.empty());
-        Assertions.assertTrue(strings((String[]) null).is.any.empty());
-        Assertions.assertFalse(strings((String[]) null).is.none.empty());
+        Assertions.assertEquals(StringUtils.isAnyEmpty((String[])null),strs((String[]) null).is.any.empty());
+        Assertions.assertEquals(!StringUtils.isAnyEmpty((String[])null),strs((String[]) null).is.not.any.empty());
+        Assertions.assertEquals(StringUtils.isNoneEmpty((String[])null),strs((String[]) null).is.none.empty());
+        Assertions.assertEquals(!StringUtils.isNoneEmpty((String[])null),strings((String[]) null).is.not.none.empty());
+        Assertions.assertEquals(!StringUtils.isNoneEmpty((String[])null),strings((String[]) null).is.the.not.none.empty());
 
         Assertions.assertFalse(strs("X", "x").is.any.empty());
         Assertions.assertTrue(strs("X", "x").is.none.empty());
@@ -129,11 +130,10 @@ class TestStr {
         Assertions.assertTrue(strings(" ", " ").is.any.blank());
         Assertions.assertFalse(strings(" ", " ").is.none.blank());
 
-        Assertions.assertTrue(strs((String[]) null).is.any.blank());
-        Assertions.assertFalse(strs((String[]) null).is.not.any.blank());
-        Assertions.assertFalse(strs((String[]) null).is.none.blank());
-        Assertions.assertTrue(strings((String[]) null).is.any.blank());
-        Assertions.assertFalse(strings((String[]) null).is.none.blank());
+        Assertions.assertEquals(StringUtils.isAnyBlank((String[])null),strs((String[]) null).is.any.blank());
+        Assertions.assertEquals(!StringUtils.isAnyBlank((String[])null),strs((String[]) null).is.not.any.blank());
+        Assertions.assertEquals(StringUtils.isNoneBlank((String[])null),strs((String[]) null).is.none.blank());
+        Assertions.assertEquals(!StringUtils.isNoneBlank((String[])null),strings((String[]) null).is.not.none.blank());
 
         Assertions.assertFalse(strs("X", "x").is.any.blank());
         Assertions.assertTrue(strs("X", "x").is.none.blank());
