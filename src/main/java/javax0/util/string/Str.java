@@ -177,13 +177,17 @@ public class Str {
         return nullCorrection.apply(substringBetween(string, open, close, ignoreCase));
     }
 
-    @Deprecated()
+    //<editor-fold id="sameNameMethods">
+    @Generated("by Geci")
+    public String deleteWhitespace() {
+        notArray();
+        return nullCorrection.apply(StringUtils.deleteWhitespace(string));
+    }
+    @Generated("by Geci")
     public String trim() {
         notArray();
         return nullCorrection.apply(StringUtils.trim(string));
     }
-
-    //<editor-fold id="sameNameMethods">
     @Generated("by Geci")
     public String swapCase() {
         notArray();
@@ -198,6 +202,11 @@ public class Str {
     public String upperCase() {
         notArray();
         return nullCorrection.apply(StringUtils.upperCase(string));
+    }
+    @Generated("by Geci")
+    public String normalizeSpace() {
+        notArray();
+        return nullCorrection.apply(StringUtils.normalizeSpace(string));
     }
     @Generated("by Geci")
     public String stripAccents() {
@@ -224,16 +233,21 @@ public class Str {
         notArray();
         return nullCorrection.apply(StringUtils.capitalize(string));
     }
+    @Generated("by Geci")
+    public String getDigits() {
+        notArray();
+        return nullCorrection.apply(StringUtils.getDigits(string));
+    }
+    @Generated("by Geci")
+    public String reverse() {
+        notArray();
+        return nullCorrection.apply(StringUtils.reverse(string));
+    }
     //</editor-fold>
 
     public String mid(int pos, int len) {
         notArray();
         return nullCorrection.apply(StringUtils.mid(string, pos, len));
-    }
-
-    public String normalizeSpace() {
-        notArray();
-        return nullCorrection.apply(StringUtils.normalizeSpace(string));
     }
 
     public String strip(final String stripChars) {
@@ -468,6 +482,14 @@ public class Str {
 
         //<editor-fold id="chains0">
         @Generated("by Geci")
+        public Chain deleteWhitespace() {
+            return copy(Str.this.deleteWhitespace()).new Chain();
+        }
+        @Generated("by Geci")
+        public Chain trim() {
+            return copy(Str.this.trim()).new Chain();
+        }
+        @Generated("by Geci")
         public Chain swapCase() {
             return copy(Str.this.swapCase()).new Chain();
         }
@@ -484,14 +506,6 @@ public class Str {
             return copy(Str.this.normalizeSpace()).new Chain();
         }
         @Generated("by Geci")
-        public Chain uncapitalize() {
-            return copy(Str.this.uncapitalize()).new Chain();
-        }
-        @Generated("by Geci")
-        public Chain strip() {
-            return copy(Str.this.strip()).new Chain();
-        }
-        @Generated("by Geci")
         public Chain stripAccents() {
             return copy(Str.this.stripAccents()).new Chain();
         }
@@ -502,6 +516,22 @@ public class Str {
         @Generated("by Geci")
         public Chain chomp() {
             return copy(Str.this.chomp()).new Chain();
+        }
+        @Generated("by Geci")
+        public Chain uncapitalize() {
+            return copy(Str.this.uncapitalize()).new Chain();
+        }
+        @Generated("by Geci")
+        public Chain capitalize() {
+            return copy(Str.this.capitalize()).new Chain();
+        }
+        @Generated("by Geci")
+        public Chain getDigits() {
+            return copy(Str.this.getDigits()).new Chain();
+        }
+        @Generated("by Geci")
+        public Chain reverse() {
+            return copy(Str.this.reverse()).new Chain();
         }
         //</editor-fold>
 

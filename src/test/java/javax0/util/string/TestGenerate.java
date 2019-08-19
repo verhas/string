@@ -9,6 +9,20 @@ import static javax0.geci.api.Source.maven;
 
 class TestGenerate {
 
+    /**
+     * Single String argument methods that return a String, except those
+     * that can be composed with fluent API. For example {@code
+     * trimToNull}, and {@code trimToEmpty} are not present because they
+     * can be used using the null correction.
+     *
+     * 'strip()' is implemented to incorporate left and right as extra
+     * functionality.
+     */
+    public static final String SINGLE_STRING_ARGUMENT_METHODS =
+            "deleteWhitespace,trim,swapCase,lowerCase,upperCase,"
+                    + "normalizeSpace,stripAccents,chop,chomp,uncapitalize,capitalize,"
+                    + "getDigits,reverse";
+
     @Test
     void generateCode() throws Exception {
         final var geci = new Geci();
@@ -31,7 +45,7 @@ class TestGenerate {
                                 .mnemonic("oneArgMethods")
                                 .build())
                         .register(Repeated.builder()
-                                .values("swapCase,lowerCase,upperCase,stripAccents,chop,chomp,uncapitalize,capitalize")
+                                .values(SINGLE_STRING_ARGUMENT_METHODS)
                                 .template("```@Generated(\"by Geci\")\n" +
                                         "public String {{value}}() {\n" +
                                         "    notArray();\n" +
@@ -71,7 +85,7 @@ class TestGenerate {
                                 .mnemonic("chains2")
                                 .build())
                         .register(Repeated.builder()
-                                .values("swapCase,lowerCase,upperCase,normalizeSpace,uncapitalize,strip,stripAccents,chop,chomp")
+                                .values(SINGLE_STRING_ARGUMENT_METHODS)
                                 .template("```@Generated(\"by Geci\")\n" +
                                         "public Chain {{value}}() {\n" +
                                         "    return copy(Str.this.{{value}}()).new Chain();\n" +
